@@ -158,14 +158,16 @@ a {
 
 /* Hero Section */
 .hero {
-    max-width: 800px;
+    max-width: 1050px;
+    padding: 2rem 0;
 }
 
 .intro-text {
-    font-size: 1.5rem;
-    line-height: 1.6;
+    font-size: 2.75rem;
+    line-height: 1.3;
     color: var(--text-primary);
-    font-weight: 400;
+    font-weight: 300;
+    letter-spacing: -0.02em;
 }
 
 /* Main Layout */
