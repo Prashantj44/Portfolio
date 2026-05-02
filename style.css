@@ -162,9 +162,10 @@ a {
 }
 
 .intro-text {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     line-height: 1.6;
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    font-weight: 400;
 }
 
 /* Main Layout */
