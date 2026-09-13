@@ -199,41 +199,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initThreeJS();
 
     // --------------------------------------------------------------------------
-    // 3. VANILLA 3D PERSPECTIVE TILT ENGINE (EXCLUDING CONTACT CARD)
+    // 3. MODERN HOVER FLOAT SYSTEM (CSS-DRIVEN)
     // --------------------------------------------------------------------------
-    function init3DTiltEngine() {
-        const tiltCards = document.querySelectorAll('.tilt-card');
-
-        tiltCards.forEach(card => {
-            const glare = card.querySelector('.card-glare');
-
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const rotateX = -((y - centerY) / centerY) * 12;
-                const rotateY = ((x - centerX) / centerX) * 12;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
-
-                if (glare) {
-                    const percentX = (x / rect.width) * 100;
-                    const percentY = (y / rect.height) * 100;
-                    glare.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 70%)`;
-                }
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-            });
-        });
-    }
-
-    init3DTiltEngine();
+    // The 3D Perspective Tilt engine has been removed in favor of a performant
+    // pure CSS glassmorphism float effect (.modern-hover) in style.css.
 
     // --------------------------------------------------------------------------
     // 4. DYNAMIC TYPING SUBTITLE ANIMATION
