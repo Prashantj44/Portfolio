@@ -56,9 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
             topViewTitle.textContent = paneTitles[targetId];
         }
 
-        // Close mobile sidebar drawer if open
+        // Close mobile sidebar drawer and overlay if open
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
         if (sidebarNav) {
             sidebarNav.classList.remove('active-drawer');
+        }
+        if (sidebarOverlay) {
+            sidebarOverlay.classList.remove('active-overlay');
         }
     }
 
@@ -72,10 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Mobile Hamburger Toggle Button
+    // Mobile Hamburger Toggle Button & Overlay Click
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
     if (mobileMenuBtn && sidebarNav) {
         mobileMenuBtn.addEventListener('click', () => {
             sidebarNav.classList.toggle('active-drawer');
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.toggle('active-overlay');
+            }
+        });
+    }
+
+    if (sidebarOverlay && sidebarNav) {
+        sidebarOverlay.addEventListener('click', () => {
+            sidebarNav.classList.remove('active-drawer');
+            sidebarOverlay.classList.remove('active-overlay');
         });
     }
 
