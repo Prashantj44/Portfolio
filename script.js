@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Outer Wireframe Polyhedron (Pure Silver White)
         const geoOuter = new THREE.IcosahedronGeometry(7, 1);
         const matOuter = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
+            color: 0x000000,
             wireframe: true,
             transparent: true,
             opacity: 0.18
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Inner Polyhedron (Monochrome Dark Gray)
         const geoInner = new THREE.OctahedronGeometry(4, 0);
         const matInner = new THREE.MeshBasicMaterial({
-            color: 0xcccccc,
+            color: 0x333333,
             wireframe: true,
             transparent: true,
             opacity: 0.35
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
         const particleMat = new THREE.PointsMaterial({
-            color: 0xffffff,
+            color: 0x000000,
             size: 0.2,
             transparent: true,
             opacity: 0.5
@@ -586,4 +586,80 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Mobile Hamburger Menu Toggle Logic
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinksContainer = document.querySelector('.nav-links');
+
+    if (hamburgerBtn && navLinksContainer) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            navLinksContainer.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                navLinksContainer.classList.remove('active');
+            });
+        });
+    }
+
+    // --------------------------------------------------------------------------
+    // 10. DYNAMIC THEME ACCENT SWITCHER
+    // --------------------------------------------------------------------------
+    const accentBtns = document.querySelectorAll('.accent-btn');
+    const themes = {
+        'mono': { accent: '#000000', text: '#000000', gradient: 'linear-gradient(135deg, #000000 0%, #888888 100%)' },
+        'cyan': { accent: '#00f3ff', text: '#00d5e0', gradient: 'linear-gradient(135deg, #00f3ff 0%, #0088ff 100%)' },
+        'emerald': { accent: '#00ff9d', text: '#00cc7d', gradient: 'linear-gradient(135deg, #00ff9d 0%, #00a86b 100%)' },
+        'violet': { accent: '#9d4edd', text: '#7b2cbf', gradient: 'linear-gradient(135deg, #9d4edd 0%, #3c096c 100%)' }
+    };
+
+    accentBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            accentBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const mode = btn.getAttribute('data-accent');
+            const palette = themes[mode] || themes['mono'];
+
+            document.documentElement.style.setProperty('--accent-color', palette.accent);
+            document.documentElement.style.setProperty('--accent-gradient', palette.gradient);
+            if (isSoundEnabled) playSynthSound(1100, 1500, 0.1, 'sine');
+        });
+    });
+
+    // --------------------------------------------------------------------------
+    // 11. INTERACTIVE RESUME MODAL HANDLER
+    // --------------------------------------------------------------------------
+    const viewResumeBtn = document.getElementById('view-resume-btn');
+    const resumeModal = document.getElementById('resume-modal');
+    const resumeCloseBtn = document.getElementById('resume-close-btn');
+    const resumeCloseAction = document.getElementById('resume-close-action');
+
+    function openResume() {
+        if (resumeModal) {
+            resumeModal.setAttribute('aria-hidden', 'false');
+            resumeModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            if (isSoundEnabled) playSynthSound(900, 1200, 0.15, 'sine');
+        }
+    }
+
+    function closeResume() {
+        if (resumeModal) {
+            resumeModal.setAttribute('aria-hidden', 'true');
+            resumeModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (viewResumeBtn) viewResumeBtn.addEventListener('click', openResume);
+    if (resumeCloseBtn) resumeCloseBtn.addEventListener('click', closeResume);
+    if (resumeCloseAction) resumeCloseAction.addEventListener('click', closeResume);
+    if (resumeModal) {
+        resumeModal.addEventListener('click', (e) => {
+            if (e.target === resumeModal) closeResume();
+        });
+    }
 });

@@ -46,6 +46,14 @@
             </ul>
 
             <div class="nav-actions">
+                <!-- Theme Accent Picker -->
+                <div class="theme-accent-selector" title="Switch Theme Accent">
+                    <button class="accent-btn active" data-accent="mono" title="Obsidian Mono"></button>
+                    <button class="accent-btn" data-accent="cyan" title="Cyber Cyan"></button>
+                    <button class="accent-btn" data-accent="emerald" title="AI Emerald"></button>
+                    <button class="accent-btn" data-accent="violet" title="Quantum Violet"></button>
+                </div>
+
                 <!-- Audio FX Toggle -->
                 <button id="sound-toggle" class="sound-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
                     <span class="sound-icon">🔇</span>
@@ -91,6 +99,10 @@
                             <span>Explore Projects</span>
                             <span class="btn-icon">🚀</span>
                         </a>
+                        <button id="view-resume-btn" class="btn-secondary">
+                            <span>View Resume</span>
+                            <span class="btn-icon">📄</span>
+                        </button>
                         <a href="#terminal" class="btn-secondary">
                             <span>Launch AI Terminal</span>
                             <span class="btn-icon">💻</span>
@@ -175,6 +187,26 @@
                 </div>
 
                 <div class="about-grid">
+                    <!-- Profile Card with Avatar -->
+                    <div class="about-card profile-card modern-hover">
+                        <div class="profile-avatar-wrapper">
+                            <img src="avatar.png" alt="Prashant Jha - AI & ML Engineer" class="profile-avatar-img">
+                            <div class="avatar-glow-ring"></div>
+                            <span class="avatar-status-dot" title="Available for Opportunities"></span>
+                        </div>
+                        <div class="profile-card-details">
+                            <h3>Prashant Jha</h3>
+                            <p class="profile-card-role">AI & ML Engineer</p>
+                            <p class="profile-card-college">SFIT Mumbai • Semester IV</p>
+                            <div class="profile-card-tags">
+                                <span class="p-tag">Python</span>
+                                <span class="p-tag">Flutter</span>
+                                <span class="p-tag">RAG</span>
+                                <span class="p-tag">Gemini API</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="about-card main-bio modern-hover">
 
                         <div class="card-header-icon">🚀</div>
@@ -609,7 +641,66 @@
         </div>
     </footer>
 
+    <!-- Interactive Engineering Resume Modal -->
+    <div id="resume-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card resume-modal-card modern-hover">
+            <button class="modal-close" id="resume-close-btn" aria-label="Close Resume">&times;</button>
+            <div class="resume-header">
+                <span class="r-badge">B.E. AI & ML • SFIT MUMBAI</span>
+                <h2>Prashant Jha</h2>
+                <p class="r-title">AI & ML Engineer | Software Architect</p>
+                <div class="r-meta">
+                    <span>📧 pkj0446@gmail.com</span> • 
+                    <span>📞 +91 9167260747</span> • 
+                    <span>📍 Mumbai, MH, India</span>
+                </div>
+            </div>
+            
+            <div class="resume-grid">
+                <div class="r-section">
+                    <h3>🎓 Academic Background</h3>
+                    <div class="r-item">
+                        <div class="r-item-title">Bachelor of Engineering in AI & ML</div>
+                        <div class="r-item-sub">St. Francis Institute of Technology (SFIT), Mumbai</div>
+                        <div class="r-item-date">2024 - 2028 | Currently in Semester IV</div>
+                        <p>Specialization in Machine Learning, System Architecture, RAG Data Pipelines, Neural Networks, Database Systems.</p>
+                    </div>
+                </div>
+
+                <div class="r-section">
+                    <h3>💼 Engineering Experience</h3>
+                    <div class="r-item">
+                        <div class="r-item-title">AI Systems & Software Engineering Intern</div>
+                        <div class="r-item-sub">InAmigos Foundation</div>
+                        <div class="r-item-date">Internship • 2025 - Present</div>
+                        <p>Building automated software evaluation pipelines, cross-platform apps, and LLM compilation tooling.</p>
+                    </div>
+                </div>
+
+                <div class="r-section full-width-r">
+                    <h3>🚀 Key Projects</h3>
+                    <ul class="r-bullet-list">
+                        <li><strong>MediLocker:</strong> Encrypted medical vault using Flutter, AES-256, Firebase, and Gemini API.</li>
+                        <li><strong>AI Forge:</strong> Autonomous software generation compiler with Zod schema validation & auto-repair.</li>
+                        <li><strong>TruthLens:</strong> Fake news detection engine with SBERT embeddings, RAG, and ensemble models.</li>
+                        <li><strong>TaskFlow:</strong> Reactive multi-platform task management app with real-time sync.</li>
+                    </ul>
+                </div>
+
+                <div class="r-section full-width-r">
+                    <h3>⚡ Core Technical Skills</h3>
+                    <p class="r-tags-str">Python, Dart (Flutter), JavaScript, C/C++, Gemini API, SBERT, TF-IDF, PyTorch/TensorFlow, FastAPI, Firebase, React.js, Docker, Git, AES-256 Encryption, Zod Schema Validation.</p>
+                </div>
+            </div>
+
+            <div class="resume-footer">
+                <button class="btn-primary" onclick="window.print()">🖨️ Print / Save PDF Resume</button>
+                <button class="btn-secondary" id="resume-close-action">Close Resume</button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript File -->
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>
