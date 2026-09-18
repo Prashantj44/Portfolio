@@ -653,23 +653,33 @@ body.obsidian-workspace {
 /* --------------------------------------------------------------------------
    6. PANE 2: ABOUT PROFILE
    -------------------------------------------------------------------------- */
-.pane-header {
-    margin-bottom: 2rem;
+.pane-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1.2rem;
 }
 
-.pane-tag {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--accent-ice);
-    letter-spacing: 1.5px;
-    display: block;
-    margin-bottom: 0.4rem;
+.header-resume-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
 }
 
-.pane-header h2 {
-    font-size: 2.2rem;
-    font-weight: 800;
+.pdf-frame-wrapper {
+    width: 100%;
+    height: 650px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    background: #07090e;
+}
+
+@media (max-width: 768px) {
+    .pdf-frame-wrapper {
+        height: 480px;
+    }
 }
 
 .about-pane-grid {

@@ -120,29 +120,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (audioCtx && audioCtx.state === 'suspended') {
             audioCtx.resume();
         }
+        return audioCtx;
     }
 
     function playSynthSound(freqStart, freqEnd, duration, type = 'sine') {
-        if (!isSoundEnabled || !audioCtx) return;
+        if (!isSoundEnabled) return;
+        const ctx = initAudioContext();
+        if (!ctx) return;
+        
         try {
-            initAudioContext();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
             
             osc.type = type;
-            osc.frequency.setValueAtTime(freqStart, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(freqStart, ctx.currentTime);
             if (freqEnd) {
-                osc.frequency.exponentialRampToValueAtTime(freqEnd, audioCtx.currentTime + duration);
+                osc.frequency.exponentialRampToValueAtTime(freqEnd, ctx.currentTime + duration);
             }
             
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            gain.gain.setValueAtTime(0.08, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
             
             osc.connect(gain);
-            gain.connect(audioCtx.destination);
+            gain.connect(ctx.destination);
             
             osc.start();
-            osc.stop(audioCtx.currentTime + duration);
+            osc.stop(ctx.currentTime + duration);
         } catch (e) {
             console.warn('Audio play failed:', e);
         }
@@ -153,26 +156,33 @@ document.addEventListener('DOMContentLoaded', () => {
         soundToggleBtn.addEventListener('click', () => {
             initAudioContext();
             isSoundEnabled = !isSoundEnabled;
+            const textEl = soundToggleBtn.querySelector('.sound-text') || soundToggleBtn;
             if (isSoundEnabled) {
                 soundToggleBtn.classList.add('active');
-                soundToggleBtn.querySelector('.sound-icon').textContent = '🔊';
-                soundToggleBtn.querySelector('.sound-text').textContent = 'SFX ON';
+                textEl.textContent = 'SFX ON';
                 playSynthSound(800, 1200, 0.15, 'sine');
             } else {
                 soundToggleBtn.classList.remove('active');
-                soundToggleBtn.querySelector('.sound-icon').textContent = '🔇';
-                soundToggleBtn.querySelector('.sound-text').textContent = 'SFX OFF';
+                textEl.textContent = 'SFX OFF';
             }
         });
     }
 
-    document.querySelectorAll('button, a, .filter-btn, .t-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            if (isSoundEnabled) playSynthSound(600, 800, 0.05, 'sine');
-        });
-        el.addEventListener('click', () => {
-            if (isSoundEnabled) playSynthSound(900, 400, 0.08, 'triangle');
-        });
+    // Global Event Delegation for reliable SFX playback across all elements
+    document.addEventListener('mouseover', (e) => {
+        if (!isSoundEnabled) return;
+        const target = e.target.closest('button, a, .filter-btn, .t-btn, .nav-item, .vault-card');
+        if (target) {
+            playSynthSound(600, 800, 0.04, 'sine');
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!isSoundEnabled) return;
+        const target = e.target.closest('button, a, .filter-btn, .t-btn, .nav-item');
+        if (target && target.id !== 'sound-toggle') {
+            playSynthSound(900, 450, 0.08, 'triangle');
+        }
     });
 
     // --------------------------------------------------------------------------
