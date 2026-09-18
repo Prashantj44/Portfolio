@@ -316,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const terminalInput = document.getElementById('terminal-input');
         const terminalOutput = document.getElementById('terminal-output');
         const quickBtns = document.querySelectorAll('.t-btn');
-        const demoTriggers = document.querySelectorAll('.btn-demo-trigger');
 
         if (!terminalOutput || !terminalInput) return;
 
@@ -326,9 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="t-line">• <span class="t-highlight">whoami</span> : Display developer credentials & academic status.</div>
 <div class="t-line">• <span class="t-highlight">skills</span> : Output technical AI/ML & full-stack matrix.</div>
 <div class="t-line">• <span class="t-highlight">projects</span> : List featured software architectures.</div>
-<div class="t-line">• <span class="t-highlight">run medilocker</span> : Execute AES-256 encrypted health vault diagnostic.</div>
-<div class="t-line">• <span class="t-highlight">run aiforge</span> : Trigger multi-stage AI software compilation demo.</div>
-<div class="t-line">• <span class="t-highlight">run truthlens</span> : Execute SBERT & RAG misinformation verification pipeline.</div>
 <div class="t-line">• <span class="t-highlight">contact</span> : Display direct communication channels.</div>
 <div class="t-line">• <span class="t-highlight">clear</span> : Clear console screen.</div>`,
 
@@ -354,40 +350,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="t-line">2. <b>AI Forge:</b> Multi-stage software compiler with Zod schema validation & auto-repair.</div>
 <div class="t-line">3. <b>TruthLens:</b> Fake news detection system with SBERT sentence embeddings & RAG verification.</div>
 <div class="t-line">4. <b>TaskFlow:</b> Reactive task manager with state synchronization & priority scheduler.</div>`,
-
-            'run medilocker': () => `
-<div class="t-line t-output-title">[MediLocker Vault Diagnostic]</div>
-<div class="t-line">Encryption: AES-256 Payload CBC Mode ... [SECURE]</div>
-<div class="t-line">Framework: Flutter Cross-Platform + Firebase Firestore ... [ACTIVE]</div>
-<div class="t-line">AI Model: Gemini 1.5 Health Summary Pipeline ... [READY]</div>
-<div class="t-output-json">{
-  "vault_status": "LOCKED_SECURE",
-  "cipher": "AES-256-CBC",
-  "cross_platform": true,
-  "ai_summary_engine": "GEMINI_PRO_ACTIVE"
-}</div>`,
-
-            'run aiforge': () => `
-<div class="t-line t-output-title">[AI Forge Compiler Engine]</div>
-<div class="t-line">Stage 1: Spec Analysis & AST Planning ... [COMPLETE]</div>
-<div class="t-line">Stage 2: Code Generation with Zod Schema Validation ... [COMPLETE]</div>
-<div class="t-line">Stage 3: Automated Static Analysis & Syntax Repair Loop ... [COMPLETE]</div>
-<div class="t-output-json">{
-  "compilation": "SUCCESS",
-  "generated_modules": ["index.html", "style.css", "app.js"],
-  "hallucination_repair": "0_ERRORS"
-}</div>`,
-
-            'run truthlens': () => `
-<div class="t-line t-output-title">[TruthLens RAG Verification Engine]</div>
-<div class="t-line">Vector Model: SBERT sentence-transformers/all-MiniLM-L6-v2</div>
-<div class="t-line">Classification: Ensemble Model (TF-IDF + Cosine Similarity)</div>
-<div class="t-output-json">{
-  "verification": "VERIFIED_GENUINE",
-  "confidence_score": 0.9982,
-  "rag_knowledge_sources": 14,
-  "latency_ms": 128
-}</div>`,
 
             'contact': () => `
 <div class="t-line t-output-title">[Direct Communication Channels]</div>
@@ -445,16 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', () => {
                 const cmd = btn.getAttribute('data-cmd');
                 executeCommand(cmd);
-            });
-        });
-
-        demoTriggers.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const demoKey = btn.getAttribute('data-demo');
-                switchPane('terminal');
-                setTimeout(() => {
-                    executeCommand(`run ${demoKey}`);
-                }, 350);
             });
         });
     }

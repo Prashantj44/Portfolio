@@ -888,46 +888,32 @@ body.obsidian-workspace {
 
 .v-actions {
     display: flex;
-    gap: 0.8rem;
-}
-
-.btn-demo-trigger {
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid var(--accent-ice);
-    color: var(--accent-ice);
-    padding: 0.6rem 1rem;
-    border-radius: var(--radius-full);
-    font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    flex: 1;
-}
-
-.btn-demo-trigger:hover {
-    background: var(--accent-ice);
-    color: #07090e;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+    margin-top: 1rem;
 }
 
 .btn-repo-link {
-    background: transparent;
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    padding: 0.6rem 1rem;
-    border-radius: var(--radius-full);
+    width: 100%;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: var(--accent-ice);
+    padding: 0.7rem 1.2rem;
+    border-radius: var(--radius-sm);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+    gap: 0.5rem;
     transition: var(--transition-fast);
 }
 
 .btn-repo-link:hover {
-    border-color: #ffffff;
-    color: #ffffff;
+    background: var(--accent-ice);
+    color: #07090e;
+    border-color: var(--accent-ice);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+    transform: translateY(-1px);
 }
 
 /* --------------------------------------------------------------------------
@@ -1391,11 +1377,10 @@ input:focus, textarea:focus {
     }
 
     .v-actions {
-        flex-direction: column;
-        gap: 0.6rem;
+        width: 100%;
     }
 
-    .btn-demo-trigger, .btn-repo-link {
+    .btn-repo-link {
         width: 100%;
         justify-content: center;
         min-height: 44px;
