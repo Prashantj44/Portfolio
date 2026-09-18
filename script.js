@@ -1,74 +1,93 @@
 /**
- * Prashant Jha - Space Sci-Fi Multi-Page Interactive Portfolio JavaScript Engine
- * Features: Three.js 3D Cosmic Starfield, Client-Side Multi-Page View Router,
- * Space Command AI Terminal (High-Visibility), Web Audio Synth, FormSubmit API Dispatcher.
+ * Prashant Jha - AI Control Dashboard Workspace JavaScript Engine
+ * Features: Dashboard Pane Router, High-Visibility Obsidian Console, Three.js WebGL Cosmic Scene,
+ * Numerical Counters, Project Filters & FormSubmit Email Dispatcher.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
-    // 1. CLIENT-SIDE MULTI-PAGE ROUTER SYSTEM
+    // 1. DASHBOARD WORKSPACE PANE ROUTER ENGINE
     // --------------------------------------------------------------------------
-    const pageViews = document.querySelectorAll('.page-view');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const pageTriggers = document.querySelectorAll('[data-page]');
+    const panes = document.querySelectorAll('.dashboard-pane');
+    const navItems = document.querySelectorAll('.nav-item');
+    const paneTriggers = document.querySelectorAll('[data-pane]');
+    const topViewTitle = document.getElementById('top-view-title');
+    const sidebarNav = document.getElementById('sidebar-nav');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 
-    function navigateToPage(pageId) {
-        if (!pageId) pageId = 'home';
-        // Clean hash string
-        const targetId = pageId.replace('#', '');
+    const paneTitles = {
+        'dashboard': 'OVERVIEW DASHBOARD',
+        'about': 'DEVELOPER BRIEFING',
+        'skills': 'CAPABILITIES MATRIX',
+        'projects': 'SOFTWARE ARCHITECTURES',
+        'terminal': 'AI CONSOLE ENGINE',
+        'contact': 'TRANSMIT SIGNAL'
+    };
+
+    function switchPane(paneId) {
+        if (!paneId) paneId = 'dashboard';
+        const targetId = paneId.replace('#', '');
+        let targetPane = document.getElementById(`pane-${targetId}`);
         
-        let targetView = document.getElementById(`page-${targetId}`);
-        if (!targetView) {
-            targetView = document.getElementById('page-home');
+        if (!targetPane) {
+            targetPane = document.getElementById('pane-dashboard');
         }
 
-        // Deactivate all page views
-        pageViews.forEach(view => {
-            view.classList.remove('active-page');
-        });
+        // Deactivate all panes
+        panes.forEach(p => p.classList.remove('active-pane'));
 
-        // Activate target page view
-        if (targetView) {
-            targetView.classList.add('active-page');
+        // Activate target pane
+        if (targetPane) {
+            targetPane.classList.add('active-pane');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Update Nav Active Link State
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            const linkPage = link.getAttribute('data-page');
-            if (linkPage === targetId) {
-                link.classList.add('active');
+        // Update Nav Active State
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            const itemPane = item.getAttribute('data-pane');
+            if (itemPane === targetId) {
+                item.classList.add('active');
             }
+        });
+
+        // Update Top Bar View Title
+        if (topViewTitle && paneTitles[targetId]) {
+            topViewTitle.textContent = paneTitles[targetId];
+        }
+
+        // Close mobile sidebar drawer if open
+        if (sidebarNav) {
+            sidebarNav.classList.remove('active-drawer');
+        }
+    }
+
+    // Attach click handlers to all data-pane elements
+    paneTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            const paneId = trigger.getAttribute('data-pane');
+            if (paneId) {
+                switchPane(paneId);
+            }
+        });
+    });
+
+    // Mobile Hamburger Toggle Button
+    if (mobileMenuBtn && sidebarNav) {
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebarNav.classList.toggle('active-drawer');
         });
     }
 
-    // Attach click listeners to all data-page triggers
-    pageTriggers.forEach(trigger => {
-        trigger.addEventListener('click', (e) => {
-            const pageId = trigger.getAttribute('data-page');
-            if (pageId) {
-                navigateToPage(pageId);
-                // Close mobile hamburger if open
-                const hamburgerBtn = document.getElementById('hamburger-btn');
-                const navLinksContainer = document.querySelector('.nav-links');
-                if (hamburgerBtn && navLinksContainer) {
-                    hamburgerBtn.classList.remove('active');
-                    navLinksContainer.classList.remove('active');
-                }
-            }
-        });
-    });
-
-    // Handle browser hash navigation
+    // Hash navigation change
     window.addEventListener('hashchange', () => {
         const hash = window.location.hash.substring(1);
-        if (hash) navigateToPage(hash);
+        if (hash) switchPane(hash);
     });
 
-    // Initial page load route
+    // Initial load route
     const initialHash = window.location.hash.substring(1);
-    navigateToPage(initialHash || 'home');
+    switchPane(initialHash || 'dashboard');
 
     // --------------------------------------------------------------------------
     // 2. WEB AUDIO SYNTHESIZER SOUND ENGINE
@@ -142,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 3. THREE.JS 3D COSMIC STARFIELD WEBGL CANVAS
+    // 3. THREE.JS 3D COSMIC STARFIELD WEBGL ENGINE
     // --------------------------------------------------------------------------
     function initThreeJS() {
         const canvas = document.getElementById('bg-3d-canvas');
@@ -160,33 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Create Central 3D Sci-Fi Orbital Ring Core
-        const coreGroup = new THREE.Group();
-        
-        const geoOuter = new THREE.IcosahedronGeometry(8, 1);
-        const matOuter = new THREE.MeshBasicMaterial({
-            color: 0x00f3ff,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.18
-        });
-        const meshOuter = new THREE.Mesh(geoOuter, matOuter);
-        coreGroup.add(meshOuter);
-
-        const geoInner = new THREE.OctahedronGeometry(4.5, 0);
-        const matInner = new THREE.MeshBasicMaterial({
-            color: 0xffb703,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.25
-        });
-        const meshInner = new THREE.Mesh(geoInner, matInner);
-        coreGroup.add(meshInner);
-
-        scene.add(coreGroup);
-
-        // 3D Cosmic Particle Universe (Starfield)
-        const particleCount = 1800;
+        // 3D Particles Field (Ice Blue)
+        const particleCount = 1500;
         const particleGeo = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
 
@@ -199,10 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
         particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
         const particleMat = new THREE.PointsMaterial({
-            color: 0x00f3ff,
-            size: 0.25,
+            color: 0x38bdf8,
+            size: 0.2,
             transparent: true,
-            opacity: 0.65
+            opacity: 0.55
         });
 
         const particleSystem = new THREE.Points(particleGeo, particleMat);
@@ -219,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
             targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
-        // Render Loop
         const clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
@@ -228,17 +221,11 @@ document.addEventListener('DOMContentLoaded', () => {
             mouseX += (targetMouseX - mouseX) * 0.05;
             mouseY += (targetMouseY - mouseY) * 0.05;
 
-            meshOuter.rotation.x = elapsedTime * 0.12;
-            meshOuter.rotation.y = elapsedTime * 0.18;
+            particleSystem.rotation.y = elapsedTime * 0.03;
+            particleSystem.rotation.x = elapsedTime * 0.015;
 
-            meshInner.rotation.x = -elapsedTime * 0.22;
-            meshInner.rotation.y = -elapsedTime * 0.28;
-
-            particleSystem.rotation.y = elapsedTime * 0.04;
-            particleSystem.rotation.x = elapsedTime * 0.02;
-
-            camera.position.x = mouseX * 5;
-            camera.position.y = -mouseY * 5;
+            camera.position.x = mouseX * 4;
+            camera.position.y = -mouseY * 4;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
@@ -307,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTypingEffect();
 
     // --------------------------------------------------------------------------
-    // 5. HIGH-VISIBILITY SPACE COMMAND AI TERMINAL ENGINE (FIXED)
+    // 5. HIGH-VISIBILITY OBSIDIAN ICE TERMINAL CONSOLE ENGINE
     // --------------------------------------------------------------------------
     function initTerminal() {
         const terminalForm = document.getElementById('terminal-form');
@@ -320,15 +307,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const commands = {
             'help': () => `
-<div class="t-line t-output-title">[Available Space Command Queries]</div>
-<div class="t-line">• <span class="cmd-highlight">whoami</span> : Display developer credentials & academic details.</div>
-<div class="t-line">• <span class="cmd-highlight">skills</span> : Output technical AI/ML & full-stack matrix.</div>
-<div class="t-line">• <span class="cmd-highlight">projects</span> : List featured software architectures.</div>
-<div class="t-line">• <span class="cmd-highlight">run medilocker</span> : Execute AES-256 encrypted health vault diagnostic.</div>
-<div class="t-line">• <span class="cmd-highlight">run aiforge</span> : Trigger multi-stage AI software compilation demo.</div>
-<div class="t-line">• <span class="cmd-highlight">run truthlens</span> : Execute SBERT & RAG misinformation verification pipeline.</div>
-<div class="t-line">• <span class="cmd-highlight">contact</span> : Display direct communication channels.</div>
-<div class="t-line">• <span class="cmd-highlight">clear</span> : Clear console screen.</div>`,
+<div class="t-line t-output-title">[Available Space Console Queries]</div>
+<div class="t-line">• <span class="t-highlight">whoami</span> : Display developer credentials & academic status.</div>
+<div class="t-line">• <span class="t-highlight">skills</span> : Output technical AI/ML & full-stack matrix.</div>
+<div class="t-line">• <span class="t-highlight">projects</span> : List featured software architectures.</div>
+<div class="t-line">• <span class="t-highlight">run medilocker</span> : Execute AES-256 encrypted health vault diagnostic.</div>
+<div class="t-line">• <span class="t-highlight">run aiforge</span> : Trigger multi-stage AI software compilation demo.</div>
+<div class="t-line">• <span class="t-highlight">run truthlens</span> : Execute SBERT & RAG misinformation verification pipeline.</div>
+<div class="t-line">• <span class="t-highlight">contact</span> : Display direct communication channels.</div>
+<div class="t-line">• <span class="t-highlight">clear</span> : Clear console screen.</div>`,
 
             'whoami': () => `
 <div class="t-line t-output-title">[Developer Profile Briefing]</div>
@@ -336,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="t-line">Degree: B.E. Artificial Intelligence & Machine Learning</div>
 <div class="t-line">Institute: St. Francis Institute of Technology (SFIT), Mumbai</div>
 <div class="t-line">Current Status: Semester IV • Active Engineering Student</div>
-<div class="t-line">Internship: AI Systems & Software Intern at InAmigos Foundation</div>
+<div class="t-line">Opportunities: Seeking AI & ML Engineering Internships</div>
 <div class="t-line">Mission: Constructing high-throughput intelligent AI architectures.</div>`,
 
             'skills': () => `
@@ -407,10 +394,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Append command prompt line
             const userLine = document.createElement('div');
             userLine.className = 't-line';
-            userLine.innerHTML = `<span class="t-prompt">prashant@ai-core:~$</span> <span style="color:#ffffff; font-weight:600;">${cmdRaw}</span>`;
+            userLine.innerHTML = `<span class="t-prompt-label">prashant@ai-core:~$</span> <span style="color:#ffffff; font-weight:600;">${cmdRaw}</span>`;
             terminalOutput.appendChild(userLine);
 
             if (commands[cmd]) {
@@ -423,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 const errLine = document.createElement('div');
                 errLine.className = 't-line';
-                errLine.innerHTML = `<span style="color:#ff5f56;">Command not recognized: '${cmdRaw}'. Type <span class="cmd-highlight">help</span> for available commands.</span>`;
+                errLine.innerHTML = `<span style="color:#ef4444;">Command not recognized: '${cmdRaw}'. Type <span class="t-highlight">help</span> for available commands.</span>`;
                 terminalOutput.appendChild(errLine);
             }
 
@@ -450,11 +436,10 @@ document.addEventListener('DOMContentLoaded', () => {
         demoTriggers.forEach(btn => {
             btn.addEventListener('click', () => {
                 const demoKey = btn.getAttribute('data-demo');
-                // Navigate to terminal page view
-                navigateToPage('terminal');
+                switchPane('terminal');
                 setTimeout(() => {
                     executeCommand(`run ${demoKey}`);
-                }, 400);
+                }, 350);
             });
         });
     }
@@ -466,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
     function initProjectFiltering() {
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
+        const projectCards = document.querySelectorAll('.vault-card');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -501,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. NUMERICAL COUNTER ANIMATION ENGINE
     // --------------------------------------------------------------------------
     function initStatsCounter() {
-        const counters = document.querySelectorAll('.qstat-num');
+        const counters = document.querySelectorAll('.metric-val[data-target]');
         const observerOptions = { threshold: 0.5 };
 
         const observer = new IntersectionObserver((entries, obs) => {
@@ -559,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showStatus('⏳ Transmitting message directly to pkj0446@gmail.com...', 'sending');
             submitBtn.disabled = true;
             const originalBtnHtml = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span>Transmitting...</span> 🚀';
+            submitBtn.innerHTML = '<span>Sending...</span> 🚀';
 
             try {
                 const response = await fetch("https://formsubmit.co/ajax/pkj0446@gmail.com", {
@@ -572,14 +557,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         name: name,
                         email: email,
                         message: message,
-                        _subject: `New Space Portfolio Message from ${name}`
+                        _subject: `New Portfolio Message from ${name}`
                     })
                 });
 
                 const result = await response.json();
 
                 if (response.ok || result.success === "true" || result.message) {
-                    showStatus(`✓ Signal transmitted! Prashant has received your message at pkj0446@gmail.com.`, 'success');
+                    showStatus(`✓ Message transmitted! Prashant has received your email at pkj0446@gmail.com.`, 'success');
                     if (isSoundEnabled) playSynthSound(1200, 1600, 0.25, 'sine');
                     contactForm.reset();
                 } else {
@@ -587,10 +572,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (err) {
                 console.warn('AJAX Email dispatch fallback triggered:', err);
-                showStatus(`✓ Opening mail app to deliver message to pkj0446@gmail.com...`, 'success');
+                showStatus(`✓ Opening mail client to send message to pkj0446@gmail.com...`, 'success');
                 
                 setTimeout(() => {
-                    const mailtoUrl = `mailto:pkj0446@gmail.com?subject=${encodeURIComponent('Space Portfolio Message from ' + name)}&body=${encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + message)}`;
+                    const mailtoUrl = `mailto:pkj0446@gmail.com?subject=${encodeURIComponent('Portfolio Message from ' + name)}&body=${encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + message)}`;
                     window.location.href = mailtoUrl;
                 }, 800);
             } finally {
@@ -607,26 +592,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initRealEmailDispatch();
-
-    // --------------------------------------------------------------------------
-    // 9. NAVBAR SCROLL EFFECT & MOBILE HAMBURGER TOGGLE
-    // --------------------------------------------------------------------------
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const navLinksContainer = document.querySelector('.nav-links');
-
-    if (hamburgerBtn && navLinksContainer) {
-        hamburgerBtn.addEventListener('click', () => {
-            hamburgerBtn.classList.toggle('active');
-            navLinksContainer.classList.toggle('active');
-        });
-    }
 });

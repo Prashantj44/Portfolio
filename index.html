@@ -3,198 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prashant Jha | AI & ML Engineer</title>
-    <meta name="description" content="Space-themed interactive multi-page portfolio of Prashant Jha, AI & ML Engineer specializing in Multi-stage RAG pipelines, LLM compilation, and cross-platform systems.">
+    <title>Prashant Jha | AI & ML Engineer Portfolio</title>
+    <meta name="description" content="AI Dashboard Portfolio of Prashant Jha, AI & ML Engineer at SFIT Mumbai specializing in Multi-stage RAG pipelines, LLM compilation, and cross-platform apps.">
     <meta name="keywords" content="Prashant Jha, AI Engineer, ML Engineer, RAG, Gemini API, Flutter, MediLocker, TruthLens, AI Forge, SFIT">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght@600;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
     
-    <!-- Three.js for 3D Cosmic Canvas -->
+    <!-- Three.js for 3D Cosmic Background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body class="space-theme">
-    <!-- 3D WebGL Cosmic Starfield Canvas -->
+<body class="obsidian-workspace">
+    <!-- 3D WebGL Background Canvas -->
     <canvas id="bg-3d-canvas"></canvas>
 
-    <!-- Deep Space Ambient Dust & Nebula Blobs -->
-    <div class="space-nebula-container">
-        <div class="nebula nebula-cyan"></div>
-        <div class="nebula nebula-purple"></div>
-        <div class="nebula nebula-gold"></div>
+    <!-- Ambient Space Blobs -->
+    <div class="ambient-glow-container">
+        <div class="glow-blob blob-ice"></div>
+        <div class="glow-blob blob-slate"></div>
     </div>
 
-    <!-- Space HUD Navigation Header -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo" data-page="home">
-                <span class="hud-bracket">[</span> Prashant Jha <span class="hud-slash">/&gt;</span>
-            </a>
-            
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
-                <li><a href="#about" class="nav-link" data-page="about">About</a></li>
-                <li><a href="#skills" class="nav-link" data-page="skills">Skills</a></li>
-                <li><a href="#projects" class="nav-link" data-page="projects">Projects</a></li>
-                <li><a href="#terminal" class="nav-link" data-page="terminal">AI Terminal</a></li>
-                <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
-            </ul>
+    <!-- Main Workspace Layout -->
+    <div class="workspace-layout">
+        <!-- ===================================================================
+             SIDEBAR NAVIGATION RAIL
+             =================================================================== -->
+        <aside class="sidebar-nav" id="sidebar-nav">
+            <div class="sidebar-header">
+                <div class="sys-badge">AI CORE v4.0</div>
+                <a href="#dashboard" class="brand-logo" data-pane="dashboard">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">Prashant Jha</span>
+                </a>
+                <p class="brand-role">AI & ML Engineer • SFIT IV</p>
+            </div>
 
-            <div class="nav-actions">
-                <!-- Audio FX Toggle -->
-                <button id="sound-toggle" class="sound-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
+            <nav class="sidebar-menu">
+                <ul class="nav-list">
+                    <li>
+                        <a href="#dashboard" class="nav-item active" data-pane="dashboard">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text">Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="nav-item" data-pane="about">
+                            <span class="nav-icon">👨‍💻</span>
+                            <span class="nav-text">About Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#skills" class="nav-item" data-pane="skills">
+                            <span class="nav-icon">⚡</span>
+                            <span class="nav-text">Skills Matrix</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects" class="nav-item" data-pane="projects">
+                            <span class="nav-icon">📁</span>
+                            <span class="nav-text">Project Vault</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#terminal" class="nav-item" data-pane="terminal">
+                            <span class="nav-icon">💻</span>
+                            <span class="nav-text">AI Console</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="nav-item" data-pane="contact">
+                            <span class="nav-icon">📡</span>
+                            <span class="nav-text">Transmit Message</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-txt">OPEN TO INTERNSHIPS</span>
+                </div>
+                
+                <button id="sound-toggle" class="sound-btn" title="Toggle Audio FX" aria-label="Toggle Sound Effects">
                     <span class="sound-icon">🔇</span>
                     <span class="sound-text">SFX OFF</span>
                 </button>
-
-                <a href="#contact" class="btn-primary nav-cta" data-page="contact">Mission Control</a>
-                
-                <!-- Mobile Hamburger Toggle -->
-                <button class="hamburger" id="hamburger-btn" aria-label="Toggle Navigation Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
-        </div>
-    </nav>
+        </aside>
 
-    <main class="main-content">
         <!-- ===================================================================
-             PAGE 1: HOME VIEW
+             MAIN DASHBOARD CONTENT AREA
              =================================================================== -->
-        <div class="page-view active-page" id="page-home">
-            <section class="hero-section">
-                <div class="container hero-centered">
-                    <div class="hero-content">
-                        <div class="status-badge hud-card">
-                            <span class="pulse-dot"></span>
-                            <span>SFIT AI & ML ENGINEER • SEMESTER IV</span>
-                        </div>
-                        
-                        <h1 class="hero-title">
-                            Hi, I'm <span class="highlight-cyan">Prashant Jha</span>
+        <main class="dashboard-main">
+            <!-- Top Dashboard Bar -->
+            <header class="top-bar">
+                <div class="mobile-toggle-wrap">
+                    <button class="hamburger-btn" id="mobile-menu-btn" aria-label="Toggle Navigation Drawer">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <span class="current-view-title" id="top-view-title">OVERVIEW DASHBOARD</span>
+                </div>
+
+                <div class="top-bar-right">
+                    <div class="college-badge">
+                        <span>SFIT MUMBAI • B.E. AI & ML</span>
+                    </div>
+                    <a href="#contact" class="btn-top-cta" data-pane="contact">
+                        <span>Transmit Signal</span>
+                        <span class="cta-arrow">&rarr;</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Pane Container -->
+            <div class="pane-container">
+                <!-- =======================================================
+                     PANE 1: OVERVIEW DASHBOARD
+                     ======================================================= -->
+                <div class="dashboard-pane active-pane" id="pane-dashboard">
+                    <div class="banner-card hud-card">
+                        <div class="banner-badge">AI CONTROL CENTER</div>
+                        <h1 class="banner-title">
+                            Hi, I'm <span class="highlight-ice">Prashant Jha</span>
                         </h1>
-                        
-                        <h2 class="hero-subtitle">
+                        <h2 class="banner-subtitle">
                             I build <span id="typed-text"></span><span class="cursor">_</span>
                         </h2>
-                        
-                        <p class="description">
-                            Engineering intelligent multi-stage AI compilation engines, Retrieval-Augmented Generation (RAG) verification architectures, and encrypted cross-platform applications with high-throughput backend infrastructure.
+                        <p class="banner-desc">
+                            Engineering student at St. Francis Institute of Technology (SFIT), Mumbai. Architecting intelligent multi-stage AI compilation engines, RAG verification systems, and encrypted cross-platform applications.
                         </p>
 
-                        <div class="hero-btns">
-                            <a href="#projects" class="btn-primary" data-page="projects">
+                        <div class="banner-actions">
+                            <a href="#projects" class="btn-primary" data-pane="projects">
                                 <span>Explore Projects</span>
                                 <span class="btn-icon">🚀</span>
                             </a>
-                            <a href="#terminal" class="btn-secondary" data-page="terminal">
-                                <span>Launch AI Terminal</span>
+                            <a href="#terminal" class="btn-secondary" data-pane="terminal">
+                                <span>Launch AI Console</span>
                                 <span class="btn-icon">💻</span>
                             </a>
-                            <a href="#contact" class="btn-secondary" data-page="contact">
-                                <span>Contact Me</span>
+                            <a href="#contact" class="btn-secondary" data-pane="contact">
+                                <span>Get in Touch</span>
                                 <span class="btn-icon">📡</span>
                             </a>
                         </div>
+                    </div>
 
-                        <div class="hero-quick-stats hud-card">
-                            <div class="qstat-item">
-                                <span class="qstat-num" data-target="4">0</span><span class="qstat-plus">+</span>
-                                <span class="qstat-lbl">AI Systems</span>
-                            </div>
-                            <div class="qstat-divider"></div>
-                            <div class="qstat-item">
-                                <span class="qstat-num" data-target="99">0</span><span class="qstat-plus">.8%</span>
-                                <span class="qstat-lbl">RAG Precision</span>
-                            </div>
-                            <div class="qstat-divider"></div>
-                            <div class="qstat-item">
-                                <span class="qstat-num" data-target="256">0</span><span class="qstat-plus">-bit</span>
-                                <span class="qstat-lbl">AES Vault</span>
-                            </div>
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card hud-card">
+                            <div class="metric-icon">🤖</div>
+                            <div class="metric-val" data-target="4">0</div>
+                            <div class="metric-lbl">AI Systems Built</div>
+                        </div>
+                        <div class="metric-card hud-card">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-val" data-target="99">0</div>
+                            <div class="metric-lbl">RAG Precision (%)</div>
+                        </div>
+                        <div class="metric-card hud-card">
+                            <div class="metric-icon">🔒</div>
+                            <div class="metric-val">AES-256</div>
+                            <div class="metric-lbl">Encrypted Health Vault</div>
+                        </div>
+                        <div class="metric-card hud-card">
+                            <div class="metric-icon">🎓</div>
+                            <div class="metric-val">Sem IV</div>
+                            <div class="metric-lbl">B.E. AI & ML Major</div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Project Preview Grid -->
+                    <div class="dashboard-section-header">
+                        <h2>Featured <span class="highlight-ice">Architectures</span></h2>
+                        <a href="#projects" class="link-view-all" data-pane="projects">View All Projects &rarr;</a>
+                    </div>
+
+                    <div class="preview-projects-grid">
+                        <div class="preview-card hud-card">
+                            <div class="p-badge">Mobile & Security</div>
+                            <h3>MediLocker</h3>
+                            <p>Cross-platform medical records vault with AES-256 payload encryption & Gemini AI summary pipeline.</p>
+                            <div class="p-tags"><span>Flutter</span><span>Firebase</span><span>AES-256</span><span>Gemini API</span></div>
+                        </div>
+
+                        <div class="preview-card hud-card">
+                            <div class="p-badge">Generative Compiler</div>
+                            <h3>AI Forge</h3>
+                            <p>Multi-stage autonomous software compiler translating natural language specs into code with Zod validation.</p>
+                            <div class="p-tags"><span>Python</span><span>Gemini Pro</span><span>Multi-Agent</span><span>Zod</span></div>
+                        </div>
+
+                        <div class="preview-card hud-card">
+                            <div class="p-badge">Machine Learning</div>
+                            <h3>TruthLens</h3>
+                            <p>Misinformation verification system powered by TF-IDF, SBERT embeddings, and real-time RAG claim matching.</p>
+                            <div class="p-tags"><span>Python</span><span>SBERT</span><span>RAG</span><span>Ensemble</span></div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <!-- ===================================================================
-             PAGE 2: ABOUT VIEW
-             =================================================================== -->
-        <div class="page-view" id="page-about">
-            <section class="about-section">
-                <div class="container">
-                    <div class="section-header text-center">
-                        <span class="section-tag">MISSION BRIEFING</span>
-                        <h2>About <span class="highlight-cyan">Me</span></h2>
-                        <div class="line header-line"></div>
+                <!-- =======================================================
+                     PANE 2: ABOUT PROFILE
+                     ======================================================= -->
+                <div class="dashboard-pane" id="pane-about">
+                    <div class="pane-header">
+                        <span class="pane-tag">DEVELOPER BRIEFING</span>
+                        <h2>About <span class="highlight-ice">Prashant Jha</span></h2>
                     </div>
 
-                    <div class="about-grid">
-                        <div class="about-card main-bio hud-card">
-                            <div class="card-header-icon">🚀</div>
-                            <h3>Passionate AI & ML Architect</h3>
+                    <div class="about-pane-grid">
+                        <div class="about-card hud-card">
+                            <div class="card-icon">🚀</div>
+                            <h3>Passionate AI & ML Engineering Student</h3>
                             <p>
                                 I am an engineering student pursuing my <strong>Bachelor of Engineering in Artificial Intelligence & Machine Learning</strong> at <strong>St. Francis Institute of Technology (SFIT), Mumbai</strong>.
                             </p>
                             <p>
-                                My primary engineering focus revolves around multi-stage AI compilation engines, Retrieval-Augmented Generation (RAG) truth-verification systems, and secure cross-platform encrypted applications.
+                                My primary focus is building intelligent AI software systems, multi-stage LLM generation pipelines, Retrieval-Augmented Generation (RAG) verifiers, and secure cross-platform applications.
                             </p>
-                            <div class="bio-highlights">
-                                <div class="b-chip">⚡ Multi-Stage AI Pipelines</div>
-                                <div class="b-chip">🔍 RAG & Vector Embeddings</div>
-                                <div class="b-chip">📱 Flutter Cross-Platform</div>
-                                <div class="b-chip">🔐 Cryptographic Security</div>
+                            <div class="bio-chips">
+                                <span class="chip">⚡ Multi-Stage AI Pipelines</span>
+                                <span class="chip">🔍 RAG & Vector Embeddings</span>
+                                <span class="chip">📱 Flutter Cross-Platform</span>
+                                <span class="chip">🔐 Cryptographic Security</span>
                             </div>
                         </div>
 
-                        <div class="about-card education-card hud-card">
-                            <div class="card-header-icon">🎓</div>
-                            <h3>Education & Internship</h3>
+                        <div class="about-card hud-card">
+                            <div class="card-icon">🎓</div>
+                            <h3>Academic Journey & Status</h3>
                             
-                            <div class="edu-item">
-                                <div class="edu-degree">B.E. in Artificial Intelligence & ML</div>
-                                <div class="edu-school">St. Francis Institute of Technology (SFIT), Mumbai</div>
-                                <div class="edu-meta">Semester IV • 2024 - 2028</div>
-                                <p class="edu-desc">Core coursework: Machine Learning Algorithms, Data Structures & System Design, Neural Networks, Database Systems, Computer Architecture.</p>
+                            <div class="academic-item">
+                                <div class="acad-degree">B.E. in Artificial Intelligence & Machine Learning</div>
+                                <div class="acad-school">St. Francis Institute of Technology (SFIT), Mumbai</div>
+                                <div class="acad-meta">Semester IV • 2024 - 2028 | Currently Enrolled</div>
+                                <p class="acad-desc">Coursework: Machine Learning Algorithms, Neural Networks, System Design, Data Structures, Computer Architecture, Database Systems.</p>
                             </div>
 
-                            <div class="edu-item">
-                                <div class="edu-degree">AI Systems & Software Engineering Intern</div>
-                                <div class="edu-school">InAmigos Foundation</div>
-                                <div class="edu-meta">Project Portfolio & Assessment Engineering</div>
-                                <p class="edu-desc">Building automated evaluation tools, multi-agent frameworks, and high-performance cross-platform applications.</p>
+                            <div class="academic-item">
+                                <div class="acad-degree">Engineering Status</div>
+                                <div class="acad-school">Seeking AI & ML Engineering Internships</div>
+                                <div class="acad-meta">Available for Remote / On-Site Roles</div>
+                                <p class="acad-desc">Ready to contribute to intelligent software development, LLM data pipelines, and full-stack machine learning applications.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <!-- ===================================================================
-             PAGE 3: SKILLS VIEW
-             =================================================================== -->
-        <div class="page-view" id="page-skills">
-            <section class="skills-section">
-                <div class="container">
-                    <div class="section-header text-center">
-                        <span class="section-tag">CAPABILITIES MATRIX</span>
-                        <h2>Skills & <span class="highlight-cyan">Expertise</span></h2>
-                        <div class="line header-line"></div>
+                <!-- =======================================================
+                     PANE 3: SKILLS MATRIX
+                     ======================================================= -->
+                <div class="dashboard-pane" id="pane-skills">
+                    <div class="pane-header">
+                        <span class="pane-tag">CAPABILITIES MATRIX</span>
+                        <h2>Technical <span class="highlight-ice">Skills & Stack</span></h2>
                     </div>
 
-                    <div class="skills-grid">
+                    <div class="skills-pane-grid">
                         <div class="skill-card hud-card">
-                            <div class="skill-icon-wrap">🤖</div>
+                            <div class="s-icon">🤖</div>
                             <h3>AI & Machine Learning</h3>
-                            <ul class="skill-tags">
+                            <ul class="s-tags">
                                 <li>Gemini API</li>
                                 <li>RAG Systems</li>
                                 <li>SBERT Embeddings</li>
@@ -202,21 +280,16 @@
                                 <li>Ensemble Models</li>
                                 <li>Multi-stage Pipelines</li>
                             </ul>
-                            <div class="skill-bar-wrap">
-                                <div class="skill-bar-info">
-                                    <span>Proficiency</span>
-                                    <span>92%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 92%;"></div>
-                                </div>
+                            <div class="s-progress-wrap">
+                                <div class="s-info"><span>Proficiency</span><span>92%</span></div>
+                                <div class="s-bar"><div class="s-fill" style="width: 92%;"></div></div>
                             </div>
                         </div>
 
                         <div class="skill-card hud-card">
-                            <div class="skill-icon-wrap">💻</div>
+                            <div class="s-icon">💻</div>
                             <h3>Programming Languages</h3>
-                            <ul class="skill-tags">
+                            <ul class="s-tags">
                                 <li>Python</li>
                                 <li>Dart (Flutter)</li>
                                 <li>JavaScript (ES6+)</li>
@@ -224,21 +297,16 @@
                                 <li>HTML5 / CSS3</li>
                                 <li>SQL</li>
                             </ul>
-                            <div class="skill-bar-wrap">
-                                <div class="skill-bar-info">
-                                    <span>Proficiency</span>
-                                    <span>90%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 90%;"></div>
-                                </div>
+                            <div class="s-progress-wrap">
+                                <div class="s-info"><span>Proficiency</span><span>90%</span></div>
+                                <div class="s-bar"><div class="s-fill" style="width: 90%;"></div></div>
                             </div>
                         </div>
 
                         <div class="skill-card hud-card">
-                            <div class="skill-icon-wrap">🚀</div>
+                            <div class="s-icon">🚀</div>
                             <h3>Frameworks & Web</h3>
-                            <ul class="skill-tags">
+                            <ul class="s-tags">
                                 <li>Flutter</li>
                                 <li>React.js</li>
                                 <li>Next.js</li>
@@ -246,21 +314,16 @@
                                 <li>Firebase</li>
                                 <li>Node.js</li>
                             </ul>
-                            <div class="skill-bar-wrap">
-                                <div class="skill-bar-info">
-                                    <span>Proficiency</span>
-                                    <span>88%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 88%;"></div>
-                                </div>
+                            <div class="s-progress-wrap">
+                                <div class="s-info"><span>Proficiency</span><span>88%</span></div>
+                                <div class="s-bar"><div class="s-fill" style="width: 88%;"></div></div>
                             </div>
                         </div>
 
                         <div class="skill-card hud-card">
-                            <div class="skill-icon-wrap">🛠️</div>
+                            <div class="s-icon">🛠️</div>
                             <h3>Tools & Architecture</h3>
-                            <ul class="skill-tags">
+                            <ul class="s-tags">
                                 <li>Git & GitHub</li>
                                 <li>Docker</li>
                                 <li>VS Code</li>
@@ -268,34 +331,23 @@
                                 <li>Google Colab</li>
                                 <li>AES-256 Crypto</li>
                             </ul>
-                            <div class="skill-bar-wrap">
-                                <div class="skill-bar-info">
-                                    <span>Proficiency</span>
-                                    <span>85%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%;"></div>
-                                </div>
+                            <div class="s-progress-wrap">
+                                <div class="s-info"><span>Proficiency</span><span>85%</span></div>
+                                <div class="s-bar"><div class="s-fill" style="width: 85%;"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <!-- ===================================================================
-             PAGE 4: PROJECTS VIEW
-             =================================================================== -->
-        <div class="page-view" id="page-projects">
-            <section class="projects-section">
-                <div class="container">
-                    <div class="section-header text-center">
-                        <span class="section-tag">FEATURED ARCHITECTURES</span>
-                        <h2>Project <span class="highlight-cyan">Portfolio</span></h2>
-                        <div class="line header-line"></div>
+                <!-- =======================================================
+                     PANE 4: PROJECT VAULT
+                     ======================================================= -->
+                <div class="dashboard-pane" id="pane-projects">
+                    <div class="pane-header">
+                        <span class="pane-tag">SOFTWARE ARCHITECTURES</span>
+                        <h2>Project <span class="highlight-ice">Vault</span></h2>
                     </div>
 
-                    <!-- Category Filters -->
                     <div class="project-filters">
                         <button class="filter-btn active" data-filter="all">All Projects</button>
                         <button class="filter-btn" data-filter="ai-ml">AI & ML</button>
@@ -303,154 +355,132 @@
                         <button class="filter-btn" data-filter="fullstack">Full-Stack</button>
                     </div>
 
-                    <div class="projects-grid">
+                    <div class="projects-vault-grid">
                         <!-- Project 1: MediLocker -->
-                        <div class="project-card hud-card" data-category="mobile ai-ml">
-                            <div class="project-badge">Mobile & Security</div>
-                            <div class="project-header">
-                                <div class="p-icon">🏥</div>
+                        <div class="vault-card hud-card" data-category="mobile ai-ml">
+                            <div class="v-badge">Mobile & Security</div>
+                            <div class="v-header">
+                                <span class="v-icon">🏥</span>
                                 <h3>MediLocker</h3>
                             </div>
-                            <p class="tag">AI Medical Records Vault</p>
-                            <p class="project-desc">
+                            <p class="v-sub">AI Medical Records Vault</p>
+                            <p class="v-desc">
                                 Cross-platform medical records vault built with Flutter and Firebase, featuring AES-256 end-to-end payload encryption and instant AI health record summarization.
                             </p>
-                            <div class="project-tech">
-                                <span>Flutter</span>
-                                <span>Firebase</span>
-                                <span>AES-256</span>
-                                <span>Gemini API</span>
+                            <div class="v-tech">
+                                <span>Flutter</span><span>Firebase</span><span>AES-256</span><span>Gemini API</span>
                             </div>
-                            <div class="project-actions">
+                            <div class="v-actions">
                                 <button class="btn-demo-trigger" data-demo="medilocker">
-                                    ⚡ Run AI Demo
+                                    ⚡ Run AI Console Demo
                                 </button>
-                                <a href="https://github.com/Prashantj44/MediLocker" target="_blank" class="btn-project-link">
-                                    <span>GitHub</span>
-                                    <span class="arrow">&rarr;</span>
+                                <a href="https://github.com/Prashantj44/MediLocker" target="_blank" class="btn-repo-link">
+                                    <span>GitHub Repository</span> &rarr;
                                 </a>
                             </div>
                         </div>
 
                         <!-- Project 2: AI Forge -->
-                        <div class="project-card hud-card" data-category="ai-ml fullstack">
-                            <div class="project-badge">Generative Compiler</div>
-                            <div class="project-header">
-                                <div class="p-icon">⚡</div>
+                        <div class="vault-card hud-card" data-category="ai-ml fullstack">
+                            <div class="v-badge">Generative Compiler</div>
+                            <div class="v-header">
+                                <span class="v-icon">⚡</span>
                                 <h3>AI Forge</h3>
                             </div>
-                            <p class="tag">Software Generation Compiler</p>
-                            <p class="project-desc">
+                            <p class="v-sub">Software Generation Compiler</p>
+                            <p class="v-desc">
                                 Multi-stage autonomous AI compiler translating natural language specifications into complete, executable software architectures with schema validation and automated repair.
                             </p>
-                            <div class="project-tech">
-                                <span>Python</span>
-                                <span>Gemini Pro</span>
-                                <span>Multi-Agent</span>
-                                <span>Zod</span>
+                            <div class="v-tech">
+                                <span>Python</span><span>Gemini Pro</span><span>Multi-Agent</span><span>Zod</span>
                             </div>
-                            <div class="project-actions">
+                            <div class="v-actions">
                                 <button class="btn-demo-trigger" data-demo="aiforge">
-                                    ⚡ Run AI Demo
+                                    ⚡ Run AI Console Demo
                                 </button>
-                                <a href="https://github.com/Prashantj44" target="_blank" class="btn-project-link">
-                                    <span>GitHub</span>
-                                    <span class="arrow">&rarr;</span>
+                                <a href="https://github.com/Prashantj44" target="_blank" class="btn-repo-link">
+                                    <span>GitHub Repository</span> &rarr;
                                 </a>
                             </div>
                         </div>
 
                         <!-- Project 3: TruthLens -->
-                        <div class="project-card hud-card" data-category="ai-ml">
-                            <div class="project-badge">Machine Learning</div>
-                            <div class="project-header">
-                                <div class="p-icon">🔍</div>
+                        <div class="vault-card hud-card" data-category="ai-ml">
+                            <div class="v-badge">Machine Learning</div>
+                            <div class="v-header">
+                                <span class="v-icon">🔍</span>
                                 <h3>TruthLens</h3>
                             </div>
-                            <p class="tag">Fake News Detection System</p>
-                            <p class="project-desc">
+                            <p class="v-sub">Fake News Detection System</p>
+                            <p class="v-desc">
                                 High-accuracy misinformation verification system powered by TF-IDF, SBERT sentence embeddings, ensemble models, and real-time RAG claim verification.
                             </p>
-                            <div class="project-tech">
-                                <span>Python</span>
-                                <span>SBERT</span>
-                                <span>RAG</span>
-                                <span>TF-IDF</span>
-                                <span>Ensemble</span>
+                            <div class="v-tech">
+                                <span>Python</span><span>SBERT</span><span>RAG</span><span>TF-IDF</span><span>Ensemble</span>
                             </div>
-                            <div class="project-actions">
+                            <div class="v-actions">
                                 <button class="btn-demo-trigger" data-demo="truthlens">
-                                    ⚡ Run AI Demo
+                                    ⚡ Run AI Console Demo
                                 </button>
-                                <a href="https://github.com/Prashantj44/Truth-Lens" target="_blank" class="btn-project-link">
-                                    <span>GitHub</span>
-                                    <span class="arrow">&rarr;</span>
+                                <a href="https://github.com/Prashantj44/Truth-Lens" target="_blank" class="btn-repo-link">
+                                    <span>GitHub Repository</span> &rarr;
                                 </a>
                             </div>
                         </div>
 
                         <!-- Project 4: TaskFlow -->
-                        <div class="project-card hud-card" data-category="fullstack mobile">
-                            <div class="project-badge">Productivity App</div>
-                            <div class="project-header">
-                                <div class="p-icon">📋</div>
+                        <div class="vault-card hud-card" data-category="fullstack mobile">
+                            <div class="v-badge">Productivity App</div>
+                            <div class="v-header">
+                                <span class="v-icon">📋</span>
                                 <h3>TaskFlow</h3>
                             </div>
-                            <p class="tag">Reactive Task Manager</p>
-                            <p class="project-desc">
+                            <p class="v-sub">Reactive Task Manager</p>
+                            <p class="v-desc">
                                 Full-stack real-time task manager with state management, automated priority scheduling, offline storage synchronization, and sleek dark UI.
                             </p>
-                            <div class="project-tech">
-                                <span>React</span>
-                                <span>Flutter</span>
-                                <span>Firebase</span>
-                                <span>REST API</span>
+                            <div class="v-tech">
+                                <span>React</span><span>Flutter</span><span>Firebase</span><span>REST API</span>
                             </div>
-                            <div class="project-actions">
+                            <div class="v-actions">
                                 <button class="btn-demo-trigger" data-demo="taskflow">
-                                    ⚡ Run AI Demo
+                                    ⚡ Run AI Console Demo
                                 </button>
-                                <a href="https://github.com/Prashantj44/TaskFLow" target="_blank" class="btn-project-link">
-                                    <span>GitHub</span>
-                                    <span class="arrow">&rarr;</span>
+                                <a href="https://github.com/Prashantj44/TaskFLow" target="_blank" class="btn-repo-link">
+                                    <span>GitHub Repository</span> &rarr;
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <!-- ===================================================================
-             PAGE 5: AI TERMINAL VIEW (HIGH-VISIBILITY SPACE CONSOLE)
-             =================================================================== -->
-        <div class="page-view" id="page-terminal">
-            <section class="terminal-section">
-                <div class="container">
-                    <div class="section-header text-center">
-                        <span class="section-tag">SPACE COMMAND CONSOLE</span>
-                        <h2>Interactive <span class="highlight-cyan">AI Terminal</span></h2>
-                        <div class="line header-line"></div>
+                <!-- =======================================================
+                     PANE 5: AI CONSOLE / TERMINAL
+                     ======================================================= -->
+                <div class="dashboard-pane" id="pane-terminal">
+                    <div class="pane-header">
+                        <span class="pane-tag">AI CONSOLE SIMULATOR</span>
+                        <h2>Space <span class="highlight-ice">Terminal Engine</span></h2>
                     </div>
 
-                    <div class="terminal-container hud-card" id="ai-terminal-box">
-                        <div class="terminal-header">
-                            <div class="terminal-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
+                    <div class="terminal-workspace-box hud-card" id="ai-terminal-box">
+                        <div class="t-box-header">
+                            <div class="t-dots">
+                                <span class="t-dot red"></span>
+                                <span class="t-dot yellow"></span>
+                                <span class="t-dot green"></span>
                             </div>
-                            <div class="terminal-title">prashant@space-command-ai:~ (bash)</div>
-                            <div class="terminal-badge">ONLINE</div>
+                            <div class="t-box-title">prashant@sfit-ai-core:~ (bash)</div>
+                            <div class="t-box-status">ONLINE</div>
                         </div>
 
-                        <div class="terminal-body" id="terminal-output">
-                            <div class="t-line t-intro">Prashant Jha Space Command AI Console v3.0 [READY]</div>
-                            <div class="t-line t-sub">Type <span class="cmd-highlight">help</span> or click quick actions below to query developer metrics.</div>
+                        <div class="t-box-body" id="terminal-output">
+                            <div class="t-line t-intro">Prashant Jha AI Console v4.0 [OBSIDIAN ENGINE ACTIVE]</div>
+                            <div class="t-line t-sub">Type <span class="t-highlight">help</span> or click quick command chips below.</div>
                         </div>
 
-                        <!-- Quick Command Chips -->
-                        <div class="terminal-quick-btns">
+                        <!-- Quick Chips -->
+                        <div class="t-box-chips">
                             <button class="t-btn" data-cmd="help">help</button>
                             <button class="t-btn" data-cmd="whoami">whoami</button>
                             <button class="t-btn" data-cmd="skills">skills</button>
@@ -461,127 +491,110 @@
                             <button class="t-btn" data-cmd="clear">clear</button>
                         </div>
 
-                        <!-- Interactive Command Form -->
-                        <form id="terminal-form" class="terminal-input-row">
-                            <span class="t-prompt">prashant@ai-core:~$</span>
+                        <!-- Form Input -->
+                        <form id="terminal-form" class="t-box-input-row">
+                            <span class="t-prompt-label">prashant@ai-core:~$</span>
                             <input type="text" id="terminal-input" placeholder="Type command ('help', 'whoami', 'skills')..." autocomplete="off" spellcheck="false">
-                            <button type="submit" class="t-submit-btn">EXECUTE</button>
+                            <button type="submit" class="t-exec-btn">EXECUTE</button>
                         </form>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <!-- ===================================================================
-             PAGE 6: CONTACT VIEW
-             =================================================================== -->
-        <div class="page-view" id="page-contact">
-            <section class="contact-section">
-                <div class="container">
-                    <div class="section-header text-center">
-                        <span class="section-tag">TRANSMIT SIGNAL</span>
-                        <h2>Contact <span class="highlight-cyan">Mission Control</span></h2>
-                        <div class="line header-line"></div>
+                <!-- =======================================================
+                     PANE 6: CONTACT / TRANSMIT MESSAGE
+                     ======================================================= -->
+                <div class="dashboard-pane" id="pane-contact">
+                    <div class="pane-header">
+                        <span class="pane-tag">TRANSMIT SIGNAL</span>
+                        <h2>Contact <span class="highlight-ice">Prashant Jha</span></h2>
                     </div>
 
-                    <div class="contact-wrapper contact-card-modern hud-card">
-                        <div class="contact-info">
+                    <div class="contact-pane-grid hud-card">
+                        <div class="c-info-col">
                             <h3>Start a Project or Collaboration</h3>
-                            <p>Open for AI research, internships, and software engineering opportunities.</p>
-                            
-                            <div class="contact-details">
-                                <div class="detail-item">
-                                    <div class="detail-icon">📧</div>
+                            <p>I am open to AI research, engineering internships, and software development opportunities.</p>
+
+                            <div class="c-details-list">
+                                <div class="c-detail-item">
+                                    <div class="c-icon">📧</div>
                                     <div>
-                                        <span class="detail-label">Direct Email</span>
-                                        <p class="detail-val"><a href="mailto:pkj0446@gmail.com">pkj0446@gmail.com</a></p>
+                                        <span class="c-label">Direct Email</span>
+                                        <p class="c-val"><a href="mailto:pkj0446@gmail.com">pkj0446@gmail.com</a></p>
                                     </div>
                                 </div>
 
-                                <div class="detail-item">
-                                    <div class="detail-icon">📞</div>
+                                <div class="c-detail-item">
+                                    <div class="c-icon">📞</div>
                                     <div>
-                                        <span class="detail-label">Phone</span>
-                                        <p class="detail-val"><a href="tel:+919167260747">+91 9167260747</a></p>
+                                        <span class="c-label">Phone</span>
+                                        <p class="c-val"><a href="tel:+919167260747">+91 9167260747</a></p>
                                     </div>
                                 </div>
 
-                                <div class="detail-item">
-                                    <div class="detail-icon">📍</div>
+                                <div class="c-detail-item">
+                                    <div class="c-icon">📍</div>
                                     <div>
-                                        <span class="detail-label">Location</span>
-                                        <p class="detail-val">Mumbai, Maharashtra, India</p>
+                                        <span class="c-label">Location</span>
+                                        <p class="c-val">Mumbai, Maharashtra, India</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="social-links-wrap">
-                                <span class="social-title">Professional Profiles:</span>
-                                <div class="social-links">
-                                    <a href="https://www.linkedin.com/in/prashant-jha-4p/" target="_blank" class="social-btn linkedin">
-                                        <span class="s-icon">🔗</span> LinkedIn
+                            <div class="c-social-wrap">
+                                <span class="c-social-title">Professional Profiles:</span>
+                                <div class="c-social-btns">
+                                    <a href="https://www.linkedin.com/in/prashant-jha-4p/" target="_blank" class="social-btn">
+                                        🔗 LinkedIn
                                     </a>
-                                    <a href="https://github.com/Prashantj44" target="_blank" class="social-btn github">
-                                        <span class="s-icon">💻</span> GitHub
+                                    <a href="https://github.com/Prashantj44" target="_blank" class="social-btn">
+                                        💻 GitHub
                                     </a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="contact-form-wrap">
-                            <!-- Direct Email Dispatch Form via FormSubmit API -->
+                        <div class="c-form-col">
+                            <!-- Direct Email Dispatch Form -->
                             <form id="profile-contact-form" action="https://formsubmit.co/pkj0446@gmail.com" method="POST">
-                                <input type="hidden" name="_subject" value="New Space Portfolio Message for Prashant Jha!">
+                                <input type="hidden" name="_subject" value="New Portfolio Message for Prashant Jha!">
                                 <input type="hidden" name="_captcha" value="false">
                                 <input type="hidden" name="_template" value="table">
                                 
                                 <div class="form-group">
                                     <label for="name">Your Name</label>
-                                    <input type="text" name="name" id="name" placeholder="Commander John Doe" required>
+                                    <input type="text" name="name" id="name" placeholder="John Doe" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">Your Email</label>
-                                    <input type="email" name="email" id="email" placeholder="john@domain.com" required>
+                                    <input type="email" name="email" id="email" placeholder="john@example.com" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="message">Your Message</label>
-                                    <textarea name="message" id="message" placeholder="Hi Prashant, I'd like to collaborate on..." rows="5" required></textarea>
+                                    <textarea name="message" id="message" placeholder="Hi Prashant, I'd like to discuss an opportunity..." rows="5" required></textarea>
                                 </div>
 
                                 <button type="submit" class="btn-primary full-width submit-btn" id="contact-submit-btn">
-                                    <span>Transmit Message</span>
-                                    <span class="send-icon">🚀</span>
+                                    <span>Send Message</span>
+                                    <span class="send-icon">✈️</span>
                                 </button>
 
-                                <!-- Form Status Toast Notification -->
                                 <div id="form-status" class="form-status-msg" style="display: none;"></div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-brand">
-                <a href="#home" class="logo" data-page="home">
-                    <span class="hud-bracket">[</span> Prashant Jha <span class="hud-slash">/&gt;</span>
-                </a>
-                <p>Engineering intelligent multi-stage AI & software architectures.</p>
             </div>
-            
-            <div class="footer-copy">
-                <p>&copy; 2026 Prashant Jha. All Systems Operational.</p>
-            </div>
-        </div>
-    </footer>
 
-    <!-- Initialize Main Engine -->
-    <script src="script.js?v=6"></script>
+            <!-- Dashboard Footer -->
+            <footer class="dashboard-footer">
+                <p>&copy; 2026 Prashant Jha. AI & ML Engineer • SFIT Mumbai.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Initialize Script -->
+    <script src="script.js?v=7"></script>
 </body>
 </html>
