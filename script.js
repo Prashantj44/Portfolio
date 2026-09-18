@@ -1,12 +1,77 @@
 /**
- * Prashant Jha - Monochrome 3D Interactive Portfolio JavaScript Engine
- * Features: Three.js WebGL Black & White Scene, Vanilla 3D Tilt, Web Audio API Synth,
- * Cyber Terminal Simulator, Dynamic Typing, Project Filter & Direct Real Email Dispatch.
+ * Prashant Jha - Space Sci-Fi Multi-Page Interactive Portfolio JavaScript Engine
+ * Features: Three.js 3D Cosmic Starfield, Client-Side Multi-Page View Router,
+ * Space Command AI Terminal (High-Visibility), Web Audio Synth, FormSubmit API Dispatcher.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
-    // 1. STATE & AUDIO SYNTHESIZER SETUP
+    // 1. CLIENT-SIDE MULTI-PAGE ROUTER SYSTEM
+    // --------------------------------------------------------------------------
+    const pageViews = document.querySelectorAll('.page-view');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pageTriggers = document.querySelectorAll('[data-page]');
+
+    function navigateToPage(pageId) {
+        if (!pageId) pageId = 'home';
+        // Clean hash string
+        const targetId = pageId.replace('#', '');
+        
+        let targetView = document.getElementById(`page-${targetId}`);
+        if (!targetView) {
+            targetView = document.getElementById('page-home');
+        }
+
+        // Deactivate all page views
+        pageViews.forEach(view => {
+            view.classList.remove('active-page');
+        });
+
+        // Activate target page view
+        if (targetView) {
+            targetView.classList.add('active-page');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Update Nav Active Link State
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const linkPage = link.getAttribute('data-page');
+            if (linkPage === targetId) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Attach click listeners to all data-page triggers
+    pageTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            const pageId = trigger.getAttribute('data-page');
+            if (pageId) {
+                navigateToPage(pageId);
+                // Close mobile hamburger if open
+                const hamburgerBtn = document.getElementById('hamburger-btn');
+                const navLinksContainer = document.querySelector('.nav-links');
+                if (hamburgerBtn && navLinksContainer) {
+                    hamburgerBtn.classList.remove('active');
+                    navLinksContainer.classList.remove('active');
+                }
+            }
+        });
+    });
+
+    // Handle browser hash navigation
+    window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash) navigateToPage(hash);
+    });
+
+    // Initial page load route
+    const initialHash = window.location.hash.substring(1);
+    navigateToPage(initialHash || 'home');
+
+    // --------------------------------------------------------------------------
+    // 2. WEB AUDIO SYNTHESIZER SOUND ENGINE
     // --------------------------------------------------------------------------
     let isSoundEnabled = false;
     let audioCtx = null;
@@ -23,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Pure Synthesizer Sound Generator
     function playSynthSound(freqStart, freqEnd, duration, type = 'sine') {
         if (!isSoundEnabled || !audioCtx) return;
         try {
@@ -68,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Attach click audio to buttons and links
     document.querySelectorAll('button, a, .filter-btn, .t-btn').forEach(el => {
         el.addEventListener('mouseenter', () => {
             if (isSoundEnabled) playSynthSound(600, 800, 0.05, 'sine');
@@ -79,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 2. THREE.JS MONOCHROME 3D WEBGL BACKGROUND SCENE
+    // 3. THREE.JS 3D COSMIC STARFIELD WEBGL CANVAS
     // --------------------------------------------------------------------------
     function initThreeJS() {
         const canvas = document.getElementById('bg-3d-canvas');
@@ -87,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 25;
+        camera.position.z = 30;
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -97,13 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Create Central 3D AI Core Geometry
+        // Create Central 3D Sci-Fi Orbital Ring Core
         const coreGroup = new THREE.Group();
         
-        // Outer Wireframe Polyhedron (Pure Silver White)
-        const geoOuter = new THREE.IcosahedronGeometry(7, 1);
+        const geoOuter = new THREE.IcosahedronGeometry(8, 1);
         const matOuter = new THREE.MeshBasicMaterial({
-            color: 0x000000,
+            color: 0x00f3ff,
             wireframe: true,
             transparent: true,
             opacity: 0.18
@@ -111,43 +173,42 @@ document.addEventListener('DOMContentLoaded', () => {
         const meshOuter = new THREE.Mesh(geoOuter, matOuter);
         coreGroup.add(meshOuter);
 
-        // Inner Polyhedron (Monochrome Dark Gray)
-        const geoInner = new THREE.OctahedronGeometry(4, 0);
+        const geoInner = new THREE.OctahedronGeometry(4.5, 0);
         const matInner = new THREE.MeshBasicMaterial({
-            color: 0x333333,
+            color: 0xffb703,
             wireframe: true,
             transparent: true,
-            opacity: 0.35
+            opacity: 0.25
         });
         const meshInner = new THREE.Mesh(geoInner, matInner);
         coreGroup.add(meshInner);
 
         scene.add(coreGroup);
 
-        // 3D Monochrome Particle Field
-        const particleCount = 1000;
+        // 3D Cosmic Particle Universe (Starfield)
+        const particleCount = 1800;
         const particleGeo = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
 
         for (let i = 0; i < particleCount * 3; i += 3) {
-            positions[i] = (Math.random() - 0.5) * 80;
-            positions[i + 1] = (Math.random() - 0.5) * 80;
-            positions[i + 2] = (Math.random() - 0.5) * 80;
+            positions[i] = (Math.random() - 0.5) * 100;
+            positions[i + 1] = (Math.random() - 0.5) * 100;
+            positions[i + 2] = (Math.random() - 0.5) * 100;
         }
 
         particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
         const particleMat = new THREE.PointsMaterial({
-            color: 0x000000,
-            size: 0.2,
+            color: 0x00f3ff,
+            size: 0.25,
             transparent: true,
-            opacity: 0.5
+            opacity: 0.65
         });
 
         const particleSystem = new THREE.Points(particleGeo, particleMat);
         scene.add(particleSystem);
 
-        // Mouse Interactivity for 3D Parallax
+        // Mouse Parallax Interactivity
         let mouseX = 0;
         let mouseY = 0;
         let targetMouseX = 0;
@@ -164,23 +225,20 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animate);
             const elapsedTime = clock.getElapsedTime();
 
-            // Smooth Interpolation for mouse parallax
             mouseX += (targetMouseX - mouseX) * 0.05;
             mouseY += (targetMouseY - mouseY) * 0.05;
 
-            // Rotate core geometry
-            meshOuter.rotation.x = elapsedTime * 0.15;
-            meshOuter.rotation.y = elapsedTime * 0.2;
+            meshOuter.rotation.x = elapsedTime * 0.12;
+            meshOuter.rotation.y = elapsedTime * 0.18;
 
-            meshInner.rotation.x = -elapsedTime * 0.25;
-            meshInner.rotation.y = -elapsedTime * 0.3;
+            meshInner.rotation.x = -elapsedTime * 0.22;
+            meshInner.rotation.y = -elapsedTime * 0.28;
 
-            particleSystem.rotation.y = elapsedTime * 0.05;
-            particleSystem.rotation.x = elapsedTime * 0.03;
+            particleSystem.rotation.y = elapsedTime * 0.04;
+            particleSystem.rotation.x = elapsedTime * 0.02;
 
-            // Camera movement based on cursor
-            camera.position.x = mouseX * 4;
-            camera.position.y = -mouseY * 4;
+            camera.position.x = mouseX * 5;
+            camera.position.y = -mouseY * 5;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
@@ -188,7 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         animate();
 
-        // Window Resize Handler
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -199,13 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initThreeJS();
 
     // --------------------------------------------------------------------------
-    // 3. MODERN HOVER FLOAT SYSTEM (CSS-DRIVEN)
-    // --------------------------------------------------------------------------
-    // The 3D Perspective Tilt engine has been removed in favor of a performant
-    // pure CSS glassmorphism float effect (.modern-hover) in style.css.
-
-    // --------------------------------------------------------------------------
-    // 4. DYNAMIC TYPING SUBTITLE ANIMATION
+    // 4. DYNAMIC TYPING SUBTITLE ENGINE
     // --------------------------------------------------------------------------
     function initTypingEffect() {
         const typedTextEl = document.getElementById('typed-text');
@@ -222,9 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let phraseIdx = 0;
         let charIdx = 0;
         let isDeleting = false;
-        const typeSpeed = 100;
-        const deleteSpeed = 50;
-        const pauseDelay = 2000;
+        const typeSpeed = 90;
+        const deleteSpeed = 45;
+        const pauseDelay = 2200;
 
         function typeLoop() {
             const currentPhrase = phrases[phraseIdx];
@@ -256,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTypingEffect();
 
     // --------------------------------------------------------------------------
-    // 5. INTERACTIVE CYBER AI TERMINAL SIMULATOR
+    // 5. HIGH-VISIBILITY SPACE COMMAND AI TERMINAL ENGINE (FIXED)
     // --------------------------------------------------------------------------
     function initTerminal() {
         const terminalForm = document.getElementById('terminal-form');
@@ -269,68 +320,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const commands = {
             'help': () => `
-<div class="t-line t-output-title">Available AI Console Commands:</div>
-<div class="t-line">• <span class="cmd-text">run truthlens</span> : Execute Fake News & RAG Claim Verification Engine.</div>
-<div class="t-line">• <span class="cmd-text">run medilocker</span> : Inspect AES-256 Encrypted Health Records Summary Pipeline.</div>
-<div class="t-line">• <span class="cmd-text">run aiforge</span> : Trigger Multi-Stage Software Generation Compiler.</div>
-<div class="t-line">• <span class="cmd-text">skills</span> : Output technical stack & ML expertise matrix.</div>
-<div class="t-line">• <span class="cmd-text">whoami</span> : Display developer profile and academic details.</div>
-<div class="t-line">• <span class="cmd-text">contact</span> : Output direct contact channels.</div>
-<div class="t-line">• <span class="cmd-text">clear</span> : Clear console screen.</div>`,
+<div class="t-line t-output-title">[Available Space Command Queries]</div>
+<div class="t-line">• <span class="cmd-highlight">whoami</span> : Display developer credentials & academic details.</div>
+<div class="t-line">• <span class="cmd-highlight">skills</span> : Output technical AI/ML & full-stack matrix.</div>
+<div class="t-line">• <span class="cmd-highlight">projects</span> : List featured software architectures.</div>
+<div class="t-line">• <span class="cmd-highlight">run medilocker</span> : Execute AES-256 encrypted health vault diagnostic.</div>
+<div class="t-line">• <span class="cmd-highlight">run aiforge</span> : Trigger multi-stage AI software compilation demo.</div>
+<div class="t-line">• <span class="cmd-highlight">run truthlens</span> : Execute SBERT & RAG misinformation verification pipeline.</div>
+<div class="t-line">• <span class="cmd-highlight">contact</span> : Display direct communication channels.</div>
+<div class="t-line">• <span class="cmd-highlight">clear</span> : Clear console screen.</div>`,
 
-            'run truthlens': () => `
-<div class="t-line t-output-title">[TruthLens ML System Diagnostic]</div>
-<div class="t-line">Input: "Retrieval-Augmented Claim Verification Pipeline"</div>
-<div class="t-line">Vector Model: SBERT sentence-transformers/all-MiniLM-L6-v2</div>
-<div class="t-line">Classification: Ensemble Model (TF-IDF + Cosine Similarity)</div>
-<div class="t-output-json">{
-  "status": "VERIFIED_GENUINE",
-  "confidence_score": 0.9982,
-  "rag_sources_matched": 14,
-  "latency_ms": 128
-}</div>`,
+            'whoami': () => `
+<div class="t-line t-output-title">[Developer Profile Briefing]</div>
+<div class="t-line">Name: Prashant Jha</div>
+<div class="t-line">Degree: B.E. Artificial Intelligence & Machine Learning</div>
+<div class="t-line">Institute: St. Francis Institute of Technology (SFIT), Mumbai</div>
+<div class="t-line">Current Status: Semester IV • Active Engineering Student</div>
+<div class="t-line">Internship: AI Systems & Software Intern at InAmigos Foundation</div>
+<div class="t-line">Mission: Constructing high-throughput intelligent AI architectures.</div>`,
+
+            'skills': () => `
+<div class="t-line t-output-title">[Technical Matrix & Stack]</div>
+<div class="t-line">🤖 <b>AI/ML:</b> Gemini API, RAG Systems, SBERT Embeddings, TF-IDF, Ensemble Learning</div>
+<div class="t-line">💻 <b>Languages:</b> Python, Dart (Flutter), JavaScript, C/C++, HTML5/CSS3, SQL</div>
+<div class="t-line">🚀 <b>Frameworks:</b> Flutter, React.js, Next.js, FastAPI, Firebase, Node.js</div>
+<div class="t-line">🛠️ <b>DevOps & Tools:</b> Git, GitHub, Docker, VS Code, Zod Validation, AES-256</div>`,
+
+            'projects': () => `
+<div class="t-line t-output-title">[Featured Architectures]</div>
+<div class="t-line">1. <b>MediLocker:</b> Cross-platform medical vault with AES-256 encryption & Gemini AI summary.</div>
+<div class="t-line">2. <b>AI Forge:</b> Multi-stage software compiler with Zod schema validation & auto-repair.</div>
+<div class="t-line">3. <b>TruthLens:</b> Fake news detection system with SBERT sentence embeddings & RAG verification.</div>
+<div class="t-line">4. <b>TaskFlow:</b> Reactive task manager with state synchronization & priority scheduler.</div>`,
 
             'run medilocker': () => `
-<div class="t-line t-output-title">[MediLocker Security & Summarization Vault]</div>
-<div class="t-line">Encryption: AES-256 Payload CBC Mode</div>
-<div class="t-line">Framework: Flutter (Mobile/Web) + Firebase Firestore</div>
-<div class="t-line">AI Engine: Gemini API Health Summary Extractor</div>
+<div class="t-line t-output-title">[MediLocker Vault Diagnostic]</div>
+<div class="t-line">Encryption: AES-256 Payload CBC Mode ... [SECURE]</div>
+<div class="t-line">Framework: Flutter Cross-Platform + Firebase Firestore ... [ACTIVE]</div>
+<div class="t-line">AI Model: Gemini 1.5 Health Summary Pipeline ... [READY]</div>
 <div class="t-output-json">{
   "vault_status": "LOCKED_SECURE",
-  "aes_key_length": "256-bit",
-  "active_users": "Cross-Platform",
-  "ai_summary_status": "READY"
+  "cipher": "AES-256-CBC",
+  "cross_platform": true,
+  "ai_summary_engine": "GEMINI_PRO_ACTIVE"
 }</div>`,
 
             'run aiforge': () => `
-<div class="t-line t-output-title">[AI Forge Software Compiler Engine]</div>
-<div class="t-line">Input Spec: "Generate Responsive Task Management App with State"</div>
-<div class="t-line">Stage 1: Intent Extraction & Architecture Planning ... [SUCCESS]</div>
-<div class="t-line">Stage 2: Code Generation with Zod Schema Validation ... [SUCCESS]</div>
-<div class="t-line">Stage 3: Automated Static Analysis & Syntax Repair ... [SUCCESS]</div>
+<div class="t-line t-output-title">[AI Forge Compiler Engine]</div>
+<div class="t-line">Stage 1: Spec Analysis & AST Planning ... [COMPLETE]</div>
+<div class="t-line">Stage 2: Code Generation with Zod Schema Validation ... [COMPLETE]</div>
+<div class="t-line">Stage 3: Automated Static Analysis & Syntax Repair Loop ... [COMPLETE]</div>
 <div class="t-output-json">{
-  "build_status": "COMPILATION_COMPLETE",
-  "generated_files": ["index.html", "style.css", "app.js"],
-  "validation_errors": 0
+  "compilation": "SUCCESS",
+  "generated_modules": ["index.html", "style.css", "app.js"],
+  "hallucination_repair": "0_ERRORS"
 }</div>`,
 
-            'skills': () => `
-<div class="t-line t-output-title">[Prashant Jha Technical Stack]</div>
-<div class="t-line">🤖 <b>AI/ML:</b> Gemini API, RAG, SBERT, TF-IDF, Ensemble Learning</div>
-<div class="t-line">💻 <b>Languages:</b> Python, Dart (Flutter), JavaScript, C, C++, HTML5/CSS3</div>
-<div class="t-line">🚀 <b>Frameworks:</b> Flutter, React, Next.js, FastAPI, Firebase</div>
-<div class="t-line">🛠️ <b>DevOps & Tools:</b> Git, GitHub, Docker, VS Code, Zod</div>`,
-
-            'whoami': () => `
-<div class="t-line t-output-title">[Developer Profile]</div>
-<div class="t-line">Name: Prashant Jha</div>
-<div class="t-line">Degree: B.E. in Artificial Intelligence & Machine Learning</div>
-<div class="t-line">Institute: St. Francis Institute of Technology (SFIT), Mumbai</div>
-<div class="t-line">Current Semester: Semester IV</div>
-<div class="t-line">Mission: Engineering high-impact intelligent software architectures.</div>`,
+            'run truthlens': () => `
+<div class="t-line t-output-title">[TruthLens RAG Verification Engine]</div>
+<div class="t-line">Vector Model: SBERT sentence-transformers/all-MiniLM-L6-v2</div>
+<div class="t-line">Classification: Ensemble Model (TF-IDF + Cosine Similarity)</div>
+<div class="t-output-json">{
+  "verification": "VERIFIED_GENUINE",
+  "confidence_score": 0.9982,
+  "rag_knowledge_sources": 14,
+  "latency_ms": 128
+}</div>`,
 
             'contact': () => `
-<div class="t-line t-output-title">[Contact Channels]</div>
+<div class="t-line t-output-title">[Direct Communication Channels]</div>
 <div class="t-line">📧 Email: pkj0446@gmail.com</div>
 <div class="t-line">📞 Phone: +91 9167260747</div>
 <div class="t-line">📍 Location: Mumbai, India</div>
@@ -349,10 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Append command line
+            // Append command prompt line
             const userLine = document.createElement('div');
             userLine.className = 't-line';
-            userLine.innerHTML = `<span class="t-prompt">prashant@ai-core:~$</span> <span class="t-output-text">${cmdRaw}</span>`;
+            userLine.innerHTML = `<span class="t-prompt">prashant@ai-core:~$</span> <span style="color:#ffffff; font-weight:600;">${cmdRaw}</span>`;
             terminalOutput.appendChild(userLine);
 
             if (commands[cmd]) {
@@ -365,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 const errLine = document.createElement('div');
                 errLine.className = 't-line';
-                errLine.innerHTML = `<span style="color:#aaaaaa;">Command not recognized: '${cmdRaw}'. Type <span class="cmd-text">help</span> for available commands.</span>`;
+                errLine.innerHTML = `<span style="color:#ff5f56;">Command not recognized: '${cmdRaw}'. Type <span class="cmd-highlight">help</span> for available commands.</span>`;
                 terminalOutput.appendChild(errLine);
             }
 
@@ -392,13 +450,11 @@ document.addEventListener('DOMContentLoaded', () => {
         demoTriggers.forEach(btn => {
             btn.addEventListener('click', () => {
                 const demoKey = btn.getAttribute('data-demo');
-                const terminalSection = document.getElementById('terminal');
-                if (terminalSection) {
-                    terminalSection.scrollIntoView({ behavior: 'smooth' });
-                }
+                // Navigate to terminal page view
+                navigateToPage('terminal');
                 setTimeout(() => {
                     executeCommand(`run ${demoKey}`);
-                }, 600);
+                }, 400);
             });
         });
     }
@@ -406,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTerminal();
 
     // --------------------------------------------------------------------------
-    // 6. PROJECT CATEGORY FILTERING
+    // 6. PROJECT CATEGORY FILTERING ENGINE
     // --------------------------------------------------------------------------
     function initProjectFiltering() {
         const filterBtns = document.querySelectorAll('.filter-btn');
@@ -442,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjectFiltering();
 
     // --------------------------------------------------------------------------
-    // 7. STATS NUMERICAL COUNTER ANIMATION
+    // 7. NUMERICAL COUNTER ANIMATION ENGINE
     // --------------------------------------------------------------------------
     function initStatsCounter() {
         const counters = document.querySelectorAll('.qstat-num');
@@ -454,8 +510,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const counter = entry.target;
                     const target = parseInt(counter.getAttribute('data-target'), 10);
                     let current = 0;
-                    const increment = Math.ceil(target / 40);
-                    const duration = 1200;
+                    const increment = Math.ceil(target / 30);
+                    const duration = 1000;
                     const stepTime = duration / (target / increment);
 
                     const timer = setInterval(() => {
@@ -479,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initStatsCounter();
 
     // --------------------------------------------------------------------------
-    // 8. REAL EMAIL DISPATCH MECHANISM (FORMSUBMIT API + MAILTO FALLBACK)
+    // 8. REAL EMAIL DISPATCH ENGINE (FORMSUBMIT API + MAILTO FALLBACK)
     // --------------------------------------------------------------------------
     function initRealEmailDispatch() {
         const contactForm = document.getElementById('profile-contact-form');
@@ -500,14 +556,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Show Sending UI state
-            showStatus('⏳ Dispatching message directly to pkj0446@gmail.com...', 'sending');
+            showStatus('⏳ Transmitting message directly to pkj0446@gmail.com...', 'sending');
             submitBtn.disabled = true;
             const originalBtnHtml = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span>Sending Email...</span> 🚀';
+            submitBtn.innerHTML = '<span>Transmitting...</span> 🚀';
 
             try {
-                // Submit via FormSubmit AJAX API directly to Prashant's email
                 const response = await fetch("https://formsubmit.co/ajax/pkj0446@gmail.com", {
                     method: "POST",
                     headers: { 
@@ -518,14 +572,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         name: name,
                         email: email,
                         message: message,
-                        _subject: `New Portfolio Contact Message from ${name}`
+                        _subject: `New Space Portfolio Message from ${name}`
                     })
                 });
 
                 const result = await response.json();
 
                 if (response.ok || result.success === "true" || result.message) {
-                    showStatus(`✓ Message sent successfully! Prashant has received your email at pkj0446@gmail.com.`, 'success');
+                    showStatus(`✓ Signal transmitted! Prashant has received your message at pkj0446@gmail.com.`, 'success');
                     if (isSoundEnabled) playSynthSound(1200, 1600, 0.25, 'sine');
                     contactForm.reset();
                 } else {
@@ -533,11 +587,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (err) {
                 console.warn('AJAX Email dispatch fallback triggered:', err);
-                showStatus(`✓ Opening mail app to deliver your message directly to pkj0446@gmail.com...`, 'success');
+                showStatus(`✓ Opening mail app to deliver message to pkj0446@gmail.com...`, 'success');
                 
-                // Fallback to direct mailto trigger so message delivery is guaranteed!
                 setTimeout(() => {
-                    const mailtoUrl = `mailto:pkj0446@gmail.com?subject=${encodeURIComponent('Portfolio Message from ' + name)}&body=${encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + message)}`;
+                    const mailtoUrl = `mailto:pkj0446@gmail.com?subject=${encodeURIComponent('Space Portfolio Message from ' + name)}&body=${encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + message)}`;
                     window.location.href = mailtoUrl;
                 }, 800);
             } finally {
@@ -556,38 +609,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initRealEmailDispatch();
 
     // --------------------------------------------------------------------------
-    // 9. NAVBAR SCROLL EFFECT & ACTIVE NAVIGATION LINK TRACKING
+    // 9. NAVBAR SCROLL EFFECT & MOBILE HAMBURGER TOGGLE
     // --------------------------------------------------------------------------
     const navbar = document.getElementById('navbar');
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 40) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-
-        // Active link highlight
-        let currentSectionId = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 120;
-            const sectionHeight = section.offsetHeight;
-            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                currentSectionId = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSectionId}`) {
-                link.classList.add('active');
-            }
-        });
     });
 
-    // Mobile Hamburger Menu Toggle Logic
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinksContainer = document.querySelector('.nav-links');
 
@@ -595,71 +627,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburgerBtn.addEventListener('click', () => {
             hamburgerBtn.classList.toggle('active');
             navLinksContainer.classList.toggle('active');
-        });
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburgerBtn.classList.remove('active');
-                navLinksContainer.classList.remove('active');
-            });
-        });
-    }
-
-    // --------------------------------------------------------------------------
-    // 10. DYNAMIC THEME ACCENT SWITCHER
-    // --------------------------------------------------------------------------
-    const accentBtns = document.querySelectorAll('.accent-btn');
-    const themes = {
-        'mono': { accent: '#000000', text: '#000000', gradient: 'linear-gradient(135deg, #000000 0%, #888888 100%)' },
-        'cyan': { accent: '#00f3ff', text: '#00d5e0', gradient: 'linear-gradient(135deg, #00f3ff 0%, #0088ff 100%)' },
-        'emerald': { accent: '#00ff9d', text: '#00cc7d', gradient: 'linear-gradient(135deg, #00ff9d 0%, #00a86b 100%)' },
-        'violet': { accent: '#9d4edd', text: '#7b2cbf', gradient: 'linear-gradient(135deg, #9d4edd 0%, #3c096c 100%)' }
-    };
-
-    accentBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            accentBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const mode = btn.getAttribute('data-accent');
-            const palette = themes[mode] || themes['mono'];
-
-            document.documentElement.style.setProperty('--accent-color', palette.accent);
-            document.documentElement.style.setProperty('--accent-gradient', palette.gradient);
-            if (isSoundEnabled) playSynthSound(1100, 1500, 0.1, 'sine');
-        });
-    });
-
-    // --------------------------------------------------------------------------
-    // 11. INTERACTIVE RESUME MODAL HANDLER
-    // --------------------------------------------------------------------------
-    const viewResumeBtn = document.getElementById('view-resume-btn');
-    const resumeModal = document.getElementById('resume-modal');
-    const resumeCloseBtn = document.getElementById('resume-close-btn');
-    const resumeCloseAction = document.getElementById('resume-close-action');
-
-    function openResume() {
-        if (resumeModal) {
-            resumeModal.setAttribute('aria-hidden', 'false');
-            resumeModal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-            if (isSoundEnabled) playSynthSound(900, 1200, 0.15, 'sine');
-        }
-    }
-
-    function closeResume() {
-        if (resumeModal) {
-            resumeModal.setAttribute('aria-hidden', 'true');
-            resumeModal.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-    }
-
-    if (viewResumeBtn) viewResumeBtn.addEventListener('click', openResume);
-    if (resumeCloseBtn) resumeCloseBtn.addEventListener('click', closeResume);
-    if (resumeCloseAction) resumeCloseAction.addEventListener('click', closeResume);
-    if (resumeModal) {
-        resumeModal.addEventListener('click', (e) => {
-            if (e.target === resumeModal) closeResume();
         });
     }
 });
