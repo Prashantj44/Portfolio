@@ -7,24 +7,24 @@
    1. OBSIDIAN & TITANIUM ICE DESIGN TOKENS
    -------------------------------------------------------------------------- */
 :root {
-    --bg-dark: #07090e;
-    --bg-sidebar: #0b0f19;
-    --bg-card: #111625;
-    --bg-card-hover: #161c2e;
+    --bg-dark: #030508;
+    --bg-sidebar: #070a11;
+    --bg-card: rgba(14, 18, 28, 0.75);
+    --bg-card-hover: rgba(22, 28, 42, 0.85);
     
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-glow: rgba(56, 189, 248, 0.3);
-    --border-hover: rgba(56, 189, 248, 0.55);
+    --border-subtle: rgba(255, 255, 255, 0.12);
+    --border-glow: rgba(255, 255, 255, 0.35);
+    --border-hover: rgba(255, 255, 255, 0.7);
     
-    --accent-ice: #38bdf8;
-    --accent-ice-glow: rgba(56, 189, 248, 0.25);
-    --accent-silver: #94a3b8;
+    --accent-ice: #ffffff;
+    --accent-ice-glow: rgba(255, 255, 255, 0.25);
+    --accent-silver: #cbd5e1;
     --accent-emerald: #10b981;
     --accent-gold: #f59e0b;
     
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
+    --text-primary: #ffffff;
+    --text-secondary: #e2e8f0;
+    --text-muted: #94a3b8;
     
     --font-heading: 'Outfit', sans-serif;
     --font-main: 'Outfit', sans-serif;
@@ -372,21 +372,22 @@ body.obsidian-workspace {
 }
 
 .btn-top-cta {
-    background: var(--accent-ice);
-    color: #07090e;
-    padding: 0.5rem 1.2rem;
-    border-radius: var(--radius-full);
+    background: #ffffff;
+    color: #030508;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius-sm);
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.85rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    white-space: nowrap;
     gap: 0.4rem;
     transition: var(--transition-fast);
 }
 
 .btn-top-cta:hover {
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
     transform: translateY(-1px);
 }
 
@@ -398,35 +399,64 @@ body.obsidian-workspace {
 
 .dashboard-pane {
     display: none;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    animation: fadeInPane 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .dashboard-pane.active-pane {
     display: block;
-    opacity: 1;
-    transform: translateY(0);
+}
+
+@keyframes fadeInPane {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pane-header {
+    margin-bottom: 2rem;
+}
+
+.pane-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-silver);
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.pane-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-primary);
 }
 
 /* --------------------------------------------------------------------------
    5. PANE 1: OVERVIEW DASHBOARD
    -------------------------------------------------------------------------- */
 .banner-card {
-    padding: 2.8rem;
-    margin-bottom: 2rem;
+    padding: 3rem 2.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .banner-badge {
     display: inline-block;
-    background: rgba(56, 189, 248, 0.1);
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    color: var(--accent-ice);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-sm);
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.3rem 0.8rem;
-    border-radius: var(--radius-full);
+    font-weight: 600;
     margin-bottom: 1.2rem;
 }
 
@@ -434,12 +464,13 @@ body.obsidian-workspace {
     font-size: 3rem;
     font-weight: 900;
     line-height: 1.1;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.5px;
 }
 
 .banner-subtitle {
     font-family: var(--font-mono);
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     color: var(--text-secondary);
     margin-bottom: 1.2rem;
 }
@@ -469,47 +500,49 @@ body.obsidian-workspace {
 }
 
 .btn-primary {
-    background: var(--accent-ice);
-    color: #07090e;
-    padding: 0.8rem 1.6rem;
-    border-radius: var(--radius-full);
+    background: #ffffff;
+    color: #030508;
+    padding: 0.75rem 1.4rem;
+    border-radius: 8px;
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.9rem;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     transition: var(--transition-fast);
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 6px 25px rgba(56, 189, 248, 0.5);
+    background: #f1f5f9;
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.35);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-primary);
-    padding: 0.8rem 1.6rem;
-    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 0.75rem 1.4rem;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     transition: var(--transition-fast);
     cursor: pointer;
 }
 
 .btn-secondary:hover {
-    border-color: var(--accent-ice);
-    color: var(--accent-ice);
-    background: rgba(56, 189, 248, 0.08);
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
 }
 
 /* Metrics Grid */
@@ -1308,12 +1341,21 @@ input:focus, textarea:focus {
 }
 
 @media (max-width: 600px) {
-    .college-badge {
-        display: none;
+    .top-bar {
+        padding: 0 0.8rem;
+        height: 60px;
     }
 
     .current-view-title {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        letter-spacing: 0px;
+    }
+
+    .btn-top-cta {
+        padding: 0.38rem 0.7rem;
+        font-size: 0.78rem;
+        border-radius: 6px;
+        white-space: nowrap;
     }
 
     .banner-card {
@@ -1343,6 +1385,7 @@ input:focus, textarea:focus {
         width: 100%;
         justify-content: center;
         min-height: 44px;
+        border-radius: 8px;
     }
 
     .metrics-grid {

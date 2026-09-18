@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 3. THREE.JS 3D COSMIC STARFIELD WEBGL ENGINE
+    // 3. THREE.JS 3D PLANETARY COSMIC SPACE WEBGL ENGINE
     // --------------------------------------------------------------------------
     function initThreeJS() {
         const canvas = document.getElementById('bg-3d-canvas');
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 30;
+        camera.position.z = 35;
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -194,39 +194,139 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // 3D Particles Field (Ice Blue)
-        const particleCount = 1500;
-        const particleGeo = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
+        // Lighting System
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
 
-        for (let i = 0; i < particleCount * 3; i += 3) {
-            positions[i] = (Math.random() - 0.5) * 100;
-            positions[i + 1] = (Math.random() - 0.5) * 100;
-            positions[i + 2] = (Math.random() - 0.5) * 100;
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        dirLight.position.set(20, 20, 20);
+        scene.add(dirLight);
+
+        const pointLight = new THREE.PointLight(0xffffff, 2, 80);
+        pointLight.position.set(-15, -10, 15);
+        scene.add(pointLight);
+
+        // --- 1. DENSE WHITE & SILVER STARFIELD ---
+        const starCount = 2800;
+        const starGeo = new THREE.BufferGeometry();
+        const starPositions = new Float32Array(starCount * 3);
+        const starScales = new Float32Array(starCount);
+
+        for (let i = 0; i < starCount * 3; i += 3) {
+            starPositions[i] = (Math.random() - 0.5) * 140;
+            starPositions[i + 1] = (Math.random() - 0.5) * 140;
+            starPositions[i + 2] = (Math.random() - 0.5) * 140;
+            starScales[i / 3] = Math.random() * 0.4 + 0.1;
         }
 
-        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
 
-        const particleMat = new THREE.PointsMaterial({
-            color: 0x38bdf8,
-            size: 0.2,
+        const starMat = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.25,
             transparent: true,
-            opacity: 0.55
+            opacity: 0.85
         });
 
-        const particleSystem = new THREE.Points(particleGeo, particleMat);
-        scene.add(particleSystem);
+        const starSystem = new THREE.Points(starGeo, starMat);
+        scene.add(starSystem);
 
-        // Mouse Parallax Interactivity
+        // --- 2. PLANET 1: SATURN-STYLE RINGED GAS GIANT ---
+        const planetGroup1 = new THREE.Group();
+        planetGroup1.position.set(16, 6, -15);
+
+        // Planet Body
+        const p1Geo = new THREE.SphereGeometry(4.2, 32, 32);
+        const p1Mat = new THREE.MeshStandardMaterial({
+            color: 0x1e293b,
+            roughness: 0.4,
+            metalness: 0.6,
+            wireframe: false
+        });
+        const planet1 = new THREE.Mesh(p1Geo, p1Mat);
+        planetGroup1.add(planet1);
+
+        // Wireframe Overlay Grid for High-Tech Aesthetic
+        const p1WireMat = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.12
+        });
+        const planet1Wire = new THREE.Mesh(p1Geo, p1WireMat);
+        planetGroup1.add(planet1Wire);
+
+        // Planetary Ring
+        const ringGeo = new THREE.RingGeometry(5.4, 8.5, 64);
+        const ringMat = new THREE.MeshStandardMaterial({
+            color: 0x94a3b8,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.5,
+            metalness: 0.8
+        });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = Math.PI / 2.5;
+        ring.rotation.y = -0.2;
+        planetGroup1.add(ring);
+
+        scene.add(planetGroup1);
+
+        // --- 3. PLANET 2: CRATERED MONOCHROME MOON ---
+        const planetGroup2 = new THREE.Group();
+        planetGroup2.position.set(-18, 12, -22);
+
+        const p2Geo = new THREE.SphereGeometry(2.5, 24, 24);
+        const p2Mat = new THREE.MeshStandardMaterial({
+            color: 0x334155,
+            roughness: 0.8,
+            metalness: 0.3
+        });
+        const planet2 = new THREE.Mesh(p2Geo, p2Mat);
+        planetGroup2.add(planet2);
+
+        const p2WireMat = new THREE.MeshBasicMaterial({
+            color: 0xe2e8f0,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.15
+        });
+        const planet2Wire = new THREE.Mesh(p2Geo, p2WireMat);
+        planetGroup2.add(planet2Wire);
+
+        scene.add(planetGroup2);
+
+        // --- 4. PLANET 3: DISTANT ICE SPHERE ---
+        const p3Geo = new THREE.SphereGeometry(1.8, 20, 20);
+        const p3Mat = new THREE.MeshStandardMaterial({
+            color: 0x475569,
+            roughness: 0.5,
+            metalness: 0.5
+        });
+        const planet3 = new THREE.Mesh(p3Geo, p3Mat);
+        planet3.position.set(-14, -16, -18);
+        scene.add(planet3);
+
+        // --- MOUSE & TOUCH PARALLAX INTERACTIVITY ---
         let mouseX = 0;
         let mouseY = 0;
         let targetMouseX = 0;
         let targetMouseY = 0;
 
+        function updatePointer(clientX, clientY) {
+            targetMouseX = (clientX / window.innerWidth - 0.5) * 2;
+            targetMouseY = (clientY / window.innerHeight - 0.5) * 2;
+        }
+
         window.addEventListener('mousemove', (e) => {
-            targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-            targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            updatePointer(e.clientX, e.clientY);
         });
+
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
 
         const clock = new THREE.Clock();
         function animate() {
@@ -236,11 +336,22 @@ document.addEventListener('DOMContentLoaded', () => {
             mouseX += (targetMouseX - mouseX) * 0.05;
             mouseY += (targetMouseY - mouseY) * 0.05;
 
-            particleSystem.rotation.y = elapsedTime * 0.03;
-            particleSystem.rotation.x = elapsedTime * 0.015;
+            // Rotate Starfield
+            starSystem.rotation.y = elapsedTime * 0.015;
+            starSystem.rotation.x = elapsedTime * 0.008;
 
-            camera.position.x = mouseX * 4;
-            camera.position.y = -mouseY * 4;
+            // Rotate Planets
+            planetGroup1.rotation.y = elapsedTime * 0.04;
+            planet1Wire.rotation.y = -elapsedTime * 0.02;
+
+            planetGroup2.rotation.y = -elapsedTime * 0.03;
+            planet2.rotation.x = elapsedTime * 0.01;
+
+            planet3.rotation.y = elapsedTime * 0.025;
+
+            // Camera Parallax Panning
+            camera.position.x = mouseX * 5;
+            camera.position.y = -mouseY * 5;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
@@ -339,10 +450,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             'skills': () => `
 <div class="t-line t-output-title">[Technical Matrix & Stack]</div>
-<div class="t-line">🤖 <b>AI/ML:</b> Gemini API, RAG Systems, SBERT Embeddings, TF-IDF, Ensemble Learning</div>
-<div class="t-line">💻 <b>Languages:</b> Python, Dart (Flutter), JavaScript, C/C++, HTML5/CSS3, SQL</div>
-<div class="t-line">🚀 <b>Frameworks:</b> Flutter, React.js, Next.js, FastAPI, Firebase, Node.js</div>
-<div class="t-line">🛠️ <b>DevOps & Tools:</b> Git, GitHub, Docker, VS Code, Zod Validation, AES-256</div>`,
+<div class="t-line">• <b>AI/ML:</b> Gemini API, RAG Systems, SBERT Embeddings, TF-IDF, Ensemble Learning</div>
+<div class="t-line">• <b>Languages:</b> Python, Dart (Flutter), JavaScript, C/C++, HTML5/CSS3, SQL</div>
+<div class="t-line">• <b>Frameworks:</b> Flutter, React.js, Next.js, FastAPI, Firebase, Node.js</div>
+<div class="t-line">• <b>DevOps & Tools:</b> Git, GitHub, Docker, VS Code, Zod Validation, AES-256</div>`,
 
             'projects': () => `
 <div class="t-line t-output-title">[Featured Architectures]</div>
@@ -353,11 +464,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             'contact': () => `
 <div class="t-line t-output-title">[Direct Communication Channels]</div>
-<div class="t-line">📧 Email: pkj0446@gmail.com</div>
-<div class="t-line">📞 Phone: +91 9167260747</div>
-<div class="t-line">📍 Location: Mumbai, India</div>
-<div class="t-line">🔗 LinkedIn: linkedin.com/in/prashant-jha-4p/</div>
-<div class="t-line">💻 GitHub: github.com/Prashantj44</div>`,
+<div class="t-line">Email: pkj0446@gmail.com</div>
+<div class="t-line">Phone: +91 9167260747</div>
+<div class="t-line">Location: Mumbai, India</div>
+<div class="t-line">LinkedIn: linkedin.com/in/prashant-jha-4p/</div>
+<div class="t-line">GitHub: github.com/Prashantj44</div>`,
 
             'clear': () => null
         };
